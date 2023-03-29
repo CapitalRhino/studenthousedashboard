@@ -54,17 +54,17 @@ namespace StudentHouseDashboard.Repositories
         {
             List<Announcement> announcements = new List<Announcement>();
             UserManager userManager = new UserManager();
-            if (c == null)
+            if (c == null || c < 0)
             {
                 c = 10;
             }
-            if (p == null)
+            if (p == null || p < 0)
             {
                 p = 0;
             }
             using (SqlConnection conn = CreateConnection())
             {
-                string sql = "SELECT TOP(@count) * FROM Users WHERE ID > @start;";
+                string sql = "SELECT * FROM Announcements ORDER BY ID OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
                 sqlCommand.Parameters.AddWithValue("@start", p * c);
                 sqlCommand.Parameters.AddWithValue("@count", c);

@@ -11,7 +11,11 @@ namespace WebApp.Pages
         public void OnGet(int? p, int? c)
         {
             UserManager = new UserManager();
-            ViewData.Add("users", UserManager.GetUsersByPage(p, c));
+            if (p == null || p < 1)
+            {
+                p = 1;
+            }
+            ViewData.Add("users", UserManager.GetUsersByPage(p - 1, c));
             ViewData.Add("page", p);
             ViewData.Add("allCount", UserManager.GetAllUsers().Count());
         }

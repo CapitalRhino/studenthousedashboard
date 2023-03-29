@@ -5,36 +5,28 @@ using System.Text;
 
 namespace StudentHouseDashboard.Models
 {
-    public class Announcement : IMessage, IVotable
+    public class Announcement : GenericMessage, IVotable
     {
+        public Announcement(User author, string description, string title, DateTime publishDate, bool isImportant, bool isSticky) : base(author, description, title, publishDate)
+        {
+            IsImportant = isImportant;
+            IsSticky = isSticky;
+        }
+
         public List<Comment> Comments
         {
-            get => default;
-            set
-            {
-            }
+            get;set;
         }
 
-        public int IsImportant
+        public bool IsImportant
         {
-            get => default;
-            set
-            {
-            }
+            get;set;
         }
 
-        public int IsSticky
+        public bool IsSticky
         {
-            get => default;
-            set
-            {
-            }
+            get; set;
         }
-
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public User Author { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime PublishDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void DownVote()
         {

@@ -5,27 +5,27 @@ using System.Text;
 
 namespace StudentHouseDashboard.Models
 {
-    public class Complaint : IMessage
+    public class Complaint : GenericMessage
     {
+        public Complaint(User author, string description, string title, DateTime publishDate, ComplaintStatus status, ComplaintSeverity severity) : base(author, description, title, publishDate)
+        {
+            Status = status;
+            Severity = severity;
+        }
+
         public ComplaintStatus Status
         {
-            get => default;
-            set
-            {
-            }
+            get;set;
         }
 
         public ComplaintSeverity Severity
         {
-            get => default;
-            set
-            {
-            }
+            get;set;
         }
 
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public User Author { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime PublishDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public List<Comment> Responses
+        {
+            get;set;
+        }
     }
 }

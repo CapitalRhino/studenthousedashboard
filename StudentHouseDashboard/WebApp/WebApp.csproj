@@ -25,4 +25,12 @@
     <_ContentIncludedByDefault Remove="Pages\Contact.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HouseData\StudentHouseDashboard.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,37 +5,22 @@ using System.Text;
 
 namespace StudentHouseDashboard.Models
 {
-    public class Event : IMessage, IVotable
+    public class Event : GenericMessage
     {
-        public int StartDate
+        public Event(User author, string description, string title, DateTime publishDate, DateTime startDate, DateTime endDate) : base(author, description, title, publishDate)
         {
-            get => default;
-            set
-            {
-            }
+            StartDate = startDate;
+            EndDate = endDate;
         }
 
-        public int EndDate
+        public DateTime StartDate
         {
-            get => default;
-            set
-            {
-            }
+            get;set;
         }
 
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public User Author { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime PublishDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void DownVote()
+        public DateTime EndDate
         {
-            throw new NotImplementedException();
-        }
-
-        public void UpVote()
-        {
-            throw new NotImplementedException();
+            get;set;
         }
     }
 }

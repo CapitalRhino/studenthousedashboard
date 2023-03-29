@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -7,20 +8,42 @@ namespace StudentHouseDashboard.Models
 {
     public class User
     {
-        public User(int username, UserRole role)
+        private int id;
+        private string name;
+        private string password;
+        private UserRole role;
+
+        public User(int id, string name, string password, UserRole role)
         {
-            Username = username;
+            Id = id;
+            Name = name;
+            Password = password;
             Role = role;
         }
-
-        public int Username
+        public User()
         {
-            get;set;
+            
+        }
+        public int Id
+        {
+            get; private set;
         }
 
+        public string Name
+        {
+            get => name;
+            set => name = value;
+        }
+        [PasswordPropertyText(true)]
+        public string Password
+        {
+            get => password;
+            set => password = value;
+        }
         public UserRole Role
         {
-            get;set;
+            get => role;
+            set => role = value;
         }
     }
 }

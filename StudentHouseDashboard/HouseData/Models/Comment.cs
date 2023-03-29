@@ -5,19 +5,11 @@ using System.Text;
 
 namespace StudentHouseDashboard.Models
 {
-    public class Comment : IMessage, IVotable
+    public class Comment : GenericMessage, IVotable
     {
-        public int Responses
+        public Comment(User author, string description, string title, DateTime publishDate) : base(author, description, title, publishDate)
         {
-            get => default;
-            set
-            {
-            }
         }
-        public string Title { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public User Author { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public DateTime PublishDate { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void DownVote()
         {

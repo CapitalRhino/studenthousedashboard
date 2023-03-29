@@ -1,74 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="StudentHouseDashboard.Models.Announcement" BaseTypeListCollapsed="true">
-    <Position X="4.75" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAACAAAAAEgAEAAiAAAAAAAAAAAAAAAAAAAAAAAIhA=</HashCode>
-      <FileName>Models\Announcement.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="StudentHouseDashboard.Models.Comment" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAFgAEAAiAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
-      <FileName>Models\Comment.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="StudentHouseDashboard.Models.Complaint" BaseTypeListCollapsed="true">
     <Position X="8.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAgAEAAiAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
-      <FileName>Models\Complaint.cs</FileName>
+      <HashCode>AAAACAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIhA=</HashCode>
+      <FileName>Models\Announcement.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.2" />
   </Class>
-  <Class Name="StudentHouseDashboard.Models.Event" BaseTypeListCollapsed="true">
+  <Class Name="StudentHouseDashboard.Models.Comment" BaseTypeListCollapsed="true">
     <Position X="10" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAEgAEAAiAAAAAAgAAAAAAAAAAAAAEAAABA=</HashCode>
+      <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Models\Comment.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StudentHouseDashboard.Models.Complaint" BaseTypeListCollapsed="true">
+    <Position X="4.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Models\Complaint.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StudentHouseDashboard.Models.Event" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Models\Event.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="StudentHouseDashboard.Models.User">
     <Position X="11.75" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAABQAAAAEAAACAAAAAgAAAAA=</HashCode>
       <FileName>Models\User.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="StudentHouseDashboard.Models.IMessage">
-    <Position X="11.75" Y="5.25" Width="1.5" />
+  <Class Name="StudentHouseDashboard.GenericMessage">
+    <Position X="8.25" Y="6.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAgAEAAiAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Models\IMessage.cs</FileName>
+      <HashCode>AAAAAAAAQAAoAEAAqAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\GenericMessage.cs</FileName>
     </TypeIdentifier>
-  </Interface>
+  </Class>
   <Interface Name="StudentHouseDashboard.Models.IVotable">
-    <Position X="10" Y="5.25" Width="1.5" />
+    <Position X="10" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>Models\IVotable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="StudentHouseDashboard.Models.ComplaintSeverity">
-    <Position X="4.75" Y="5.25" Width="1.5" />
+    <Position X="4.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEgAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\ComplaintSeverity.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="StudentHouseDashboard.Models.ComplaintStatus">
-    <Position X="6.5" Y="5.25" Width="1.5" />
+    <Position X="6.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAAACAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Models\ComplaintStatus.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="StudentHouseDashboard.Models.UserRole">
-    <Position X="8.25" Y="5.25" Width="1.5" />
+    <Position X="11.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAQAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\UserRole.cs</FileName>

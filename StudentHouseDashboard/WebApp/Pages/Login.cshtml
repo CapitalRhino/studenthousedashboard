@@ -1,0 +1,26 @@
+﻿@page
+@model WebApp.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (ViewData["confirm"] != null)
+{
+    <div class="alert alert-primary" role="alert">
+        @ViewData["confirm"]
+    </div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="MyUser.Name" class="form-label">Name: </label>
+        <input asp-for="MyUser.Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="MyUser.Password" class="form-label">Password: </label>
+        <input asp-for="MyUser.Password" class="form-control" />
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary" />
+</form>

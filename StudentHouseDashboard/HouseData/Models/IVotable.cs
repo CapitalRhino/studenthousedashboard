@@ -7,7 +7,13 @@ namespace StudentHouseDashboard.Models
 {
     public interface IVotable
     {
-        void UpVote();
-        void DownVote();
+        void UpVote()
+        {
+            throw new NotImplementedException();
+        }
+        void DownVote()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

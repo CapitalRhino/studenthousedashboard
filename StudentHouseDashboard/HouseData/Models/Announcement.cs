@@ -7,7 +7,7 @@ namespace StudentHouseDashboard.Models
 {
     public class Announcement : GenericMessage, IVotable
     {
-        public Announcement(User author, string description, string title, DateTime publishDate, bool isImportant, bool isSticky) : base(author, description, title, publishDate)
+        public Announcement(int id, User author, string description, string title, DateTime publishDate, bool isImportant, bool isSticky) : base(id, author, description, title, publishDate)
         {
             IsImportant = isImportant;
             IsSticky = isSticky;

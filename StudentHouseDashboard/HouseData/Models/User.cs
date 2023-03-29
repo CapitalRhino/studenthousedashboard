@@ -15,7 +15,7 @@ namespace StudentHouseDashboard.Models
 
         public User(int id, string name, string password, UserRole role)
         {
-            Id = id;
+            ID = id;
             Name = name;
             Password = password;
             Role = role;
@@ -24,7 +24,7 @@ namespace StudentHouseDashboard.Models
         {
             
         }
-        public int Id
+        public int ID
         {
             get; private set;
         }

@@ -7,7 +7,7 @@ namespace StudentHouseDashboard.Models
 {
     public class Comment : GenericMessage, IVotable
     {
-        public Comment(User author, string description, string title, DateTime publishDate) : base(author, description, title, publishDate)
+        public Comment(int id, User author, string description, string title, DateTime publishDate) : base(id, author, description, title, publishDate)
         {
         }
 

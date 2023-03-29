@@ -29,7 +29,7 @@ namespace StudentHouseDashboard.Repositories
         }
         public List<Announcement> GetAllAnnouncements()
         {
-            var announcements = new List<Announcement>();
+            List<Announcement> announcements = new List<Announcement>();
             UserManager userManager = new UserManager();
             using (SqlConnection conn = CreateConnection())
             {
@@ -40,12 +40,44 @@ namespace StudentHouseDashboard.Repositories
                 while (reader.Read())
                 {
                     // ID, Name, Password, Role
-                    announcements.Add(new Announcement(userManager.GetUserById(Convert.ToInt32(reader["ID"])), 
+                    announcements.Add(new Announcement(Convert.ToInt32(reader["ID"]),
+                        userManager.GetUserById(Convert.ToInt32(reader["Author"])), 
                         reader["Description"].ToString(), reader["Title"].ToString(), 
                         (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
                         (bool)reader["IsSticky"]));
                 }
                 conn.Close();
+            }
+            return announcements;
+        }
+        public List<Announcement> GetAnnouncementsByPage(int? p, int? c)
+        {
+            List<Announcement> announcements = new List<Announcement>();
+            UserManager userManager = new UserManager();
+            if (c == null)
+            {
+                c = 10;
+            }
+            if (p == null)
+            {
+                p = 0;
+            }
+            using (SqlConnection conn = CreateConnection())
+            {
+                string sql = "SELECT TOP(@count) * FROM Users WHERE ID > @start;";
+                SqlCommand sqlCommand = new SqlCommand(sql, conn);
+                sqlCommand.Parameters.AddWithValue("@start", p * c);
+                sqlCommand.Parameters.AddWithValue("@count", c);
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    announcements.Add(new Announcement(Convert.ToInt32(reader["ID"]),
+                        userManager.GetUserById(Convert.ToInt32(reader["Author"])),
+                        reader["Description"].ToString(), reader["Title"].ToString(),
+                        (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
+                        (bool)reader["IsSticky"]));
+                }
+
             }
             return announcements;
         }

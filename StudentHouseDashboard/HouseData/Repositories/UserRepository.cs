@@ -48,7 +48,7 @@ namespace StudentHouseDashboard.Repositories
                         (UserRole)reader["Role"])
                         );
                 }
-                conn.Close();
+
             }
             return users;
         }
@@ -62,12 +62,40 @@ namespace StudentHouseDashboard.Repositories
                 var reader = cmd.ExecuteReader();
 
                 reader.Read();
+
                 // ID, Name, Password, Role
                 return new User(Convert.ToInt32(reader["ID"]),
                         reader["Name"].ToString(),
                         reader["Password"].ToString(),
                         (UserRole)reader["Role"]);
             }
+        }
+        public List<User> GetUsersByPage(int? p, int? c)
+        {
+            List<User> users = new List<User>();
+            if (c == null)
+            {
+                c = 0;
+            }
+            if (p == null)
+            {
+                p = 0;
+            }
+            using (SqlConnection conn = CreateConnection())
+            {
+                string sql = "SELECT TOP(@count) * FROM Users WHERE ID > @start;";
+                SqlCommand sqlCommand = new SqlCommand(sql, conn);
+                sqlCommand.Parameters.AddWithValue("@start", p * c);
+                sqlCommand.Parameters.AddWithValue("@count", c);
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    users.Add(new User(Convert.ToInt32(reader["ID"]), reader["Name"].ToString(),
+                        reader["Password"].ToString(), (UserRole)reader["Role"]));
+                }
+
+            }
+            return users;
         }
         public bool CreateUser(string name, string password, UserRole role)
         {
@@ -79,6 +107,7 @@ namespace StudentHouseDashboard.Repositories
                 cmd.Parameters.AddWithValue("@pass", password);
                 cmd.Parameters.AddWithValue("@role", (int)role);
                 int writer = cmd.ExecuteNonQuery();
+
                 if (writer == 1)
                 {
                     return true;
@@ -99,6 +128,7 @@ namespace StudentHouseDashboard.Repositories
                 cmd.Parameters.AddWithValue("@role", (int)role);
                 cmd.Parameters.AddWithValue("@id", id);
                 int writer = cmd.ExecuteNonQuery();
+
                 if (writer == 1)
                 {
                     return true;
@@ -116,6 +146,7 @@ namespace StudentHouseDashboard.Repositories
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 int writer = cmd.ExecuteNonQuery();
+
                 if (writer == 1)
                 {
                     return true;

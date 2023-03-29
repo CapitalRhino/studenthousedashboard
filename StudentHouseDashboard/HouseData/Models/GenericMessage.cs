@@ -13,12 +13,18 @@ namespace StudentHouseDashboard
         private string title;
         private DateTime publishDate;
 
-        protected GenericMessage(User author, string description, string title, DateTime publishDate)
+        protected GenericMessage(int id, User author, string description, string title, DateTime publishDate)
         {
+            ID = id;
             Author = author;
             Description = description;
             Title = title;
             PublishDate = publishDate;
+        }
+
+        public int ID
+        {
+            get; private set;
         }
 
         public User Author

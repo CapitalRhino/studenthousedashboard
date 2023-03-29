@@ -1,4 +1,23 @@
 ﻿@page
+@using StudentHouseDashboard.Models;
 @model WebApp.Pages.AnnouncementModel
 @{
+    User user = (User)ViewData["user"];
+    ViewData["Title"] = $"User {user.Name}";
 }
+<h1>@user.Name</h1>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>Name: </p>
+            <p>Password: </p>
+            <p>Role: </p>
+        </div>
+        <div class="col">
+            <p>@user.Name</p>
+            <p>@user.Password</p>
+            <p>@user.Role.ToString()</p>
+        </div>
+    </div>
+</div>
+

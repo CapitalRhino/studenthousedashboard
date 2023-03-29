@@ -25,6 +25,10 @@ namespace StudentHouseDashboard.Managers
         {
             return userRepository.GetUserById(id);
         }
+        public List<User> GetUsersByPage(int? p, int? c)
+        {
+            return userRepository.GetUsersByPage(p, c);
+        }
         public bool CreateUser(string name, string password, UserRole role)
         {
             return userRepository.CreateUser(name, password, role);

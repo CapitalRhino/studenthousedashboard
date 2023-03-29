@@ -7,7 +7,7 @@ namespace StudentHouseDashboard.Models
 {
     public class Complaint : GenericMessage
     {
-        public Complaint(User author, string description, string title, DateTime publishDate, ComplaintStatus status, ComplaintSeverity severity) : base(author, description, title, publishDate)
+        public Complaint(int id, User author, string description, string title, DateTime publishDate, ComplaintStatus status, ComplaintSeverity severity) : base(id, author, description, title, publishDate)
         {
             Status = status;
             Severity = severity;

@@ -23,7 +23,7 @@ namespace WebApp.Pages
                 if (item.Name == MyUser.Name && BCrypt.Net.BCrypt.Verify(MyUser.Password, item.Password))
                 {
                     MyUser = item;
-                    ViewData["confirm"] = $"Welcome, {MyUser.Name}! {MyUser.Id}, {MyUser.Password}, {MyUser.Role}";
+                    ViewData["confirm"] = $"Welcome, {MyUser.Name}! {MyUser.ID}, {MyUser.Password}, {MyUser.Role}";
                 }
             }
             

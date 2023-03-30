@@ -1,9 +1,12 @@
-﻿using StudentHouseDashboard.Models;
+﻿using BCrypt.Net;
+using StudentHouseDashboard.Models;
 using StudentHouseDashboard.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -28,6 +31,23 @@ namespace StudentHouseDashboard.Managers
         public List<User> GetUsersByPage(int? p, int? c)
         {
             return userRepository.GetUsersByPage(p, c);
+        }
+        public User? AuthenticatedUser(string name, string password)
+        {
+            List<User> users = userRepository.GetAllUsers();
+            User user = users.Find(x => x.Name == name);
+            if (user == null)
+            {
+                return null;
+            }
+            else
+            {
+                if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+                {
+                    return user;
+                }
+                else return null;
+            }
         }
         public bool CreateUser(string name, string password, UserRole role)
         {

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace WebApp
 {
     public class Program
@@ -8,6 +10,11 @@ namespace WebApp
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+                options.LoginPath = new PathString("/Login");
+                options.AccessDeniedPath = new PathString("/Error/401");
+            });
 
             var app = builder.Build();
 

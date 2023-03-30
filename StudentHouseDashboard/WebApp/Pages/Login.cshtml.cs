@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using StudentHouseDashboard.Models;
 using StudentHouseDashboard.Managers;
+using System.Security.Claims;
 
 namespace WebApp.Pages
 {
@@ -14,19 +17,33 @@ namespace WebApp.Pages
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost(string? returnUrl)
         {
             var userManager = new UserManager();
-
-            foreach (var item in userManager.GetAllUsers())
+            User? user = userManager.AuthenticatedUser(MyUser.Name, MyUser.Password);
+            if (user != null)
             {
-                if (item.Name == MyUser.Name && BCrypt.Net.BCrypt.Verify(MyUser.Password, item.Password))
+                List<Claim> claims = new List<Claim>();
+                claims.Add(new Claim(ClaimTypes.Name, user.Name));
+                claims.Add(new Claim("id", user.ID.ToString()));
+                claims.Add(new Claim(ClaimTypes.Role, user.Role.ToString()));
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                HttpContext.SignInAsync(new ClaimsPrincipal(claimsIdentity));
+                // ViewData["confirm"] = $"Welcome, {MyUser.Name}! {MyUser.ID}, {MyUser.Password}, {MyUser.Role}";
+                if (!String.IsNullOrWhiteSpace(returnUrl) && Url.IsLocalUrl(returnUrl))
                 {
-                    MyUser = item;
-                    ViewData["confirm"] = $"Welcome, {MyUser.Name}! {MyUser.ID}, {MyUser.Password}, {MyUser.Role}";
+                    return Redirect(returnUrl);
+                }
+                else
+                {
+                    return RedirectToPage("Announcements");
                 }
             }
-            
+            else
+            {
+                ModelState.AddModelError("InvalidCredentials", "The supplied username and/or password is invalid");
+                return Page();
+            }
         }
     }
 }

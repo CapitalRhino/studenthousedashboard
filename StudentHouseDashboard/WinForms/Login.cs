@@ -20,8 +20,12 @@ namespace WinForms
             }
             else
             {
-                MessageBox.Show($"Welcome, {user.Name}", "Login successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Dashboard dashboard = new Dashboard(this, user);
+                this.Hide();
+                dashboard.Show();
             }
+            tbUsername.Text = "";
+            tbPassword.Text = "";
         }
     }
 }

@@ -45,5 +45,9 @@ namespace StudentHouseDashboard.Models
             get => role;
             set => role = value;
         }
+        public override string ToString()
+        {
+            return $"{ID}: {Name} ({Role})";
+        }
     }
 }

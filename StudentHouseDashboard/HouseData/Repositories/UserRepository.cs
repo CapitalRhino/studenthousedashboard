@@ -141,7 +141,7 @@ namespace StudentHouseDashboard.Repositories
             using (SqlConnection conn = CreateConnection())
             {
                 string sql = "UPDATE Users " +
-                    "SET Name = 'Deleted User @id', Password = '0', Role = @role " +
+                    "SET Name = 'Deleted User @id', Password = '0'" +
                     "WHERE ID = @id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@id", id);

@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StudentHouseDashboard.Managers;
 
 namespace WebApp.Pages
 {
+    [Authorize]
     public class AnnouncementsModel : PageModel
     {
         public AnnouncementManager AnnouncementManager { get; set; }

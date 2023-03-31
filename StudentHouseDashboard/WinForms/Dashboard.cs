@@ -20,7 +20,13 @@ namespace WinForms
             this.loginForm = loginForm;
             InitializeComponent();
             lblUserStatus.Text = $"Logged in as: {user.Role} {user.Name}";
-            if (user.Role == UserRole.ADMIN || user.Role == UserRole.MANAGER)
+            if (user.Role == UserRole.MANAGER)
+            {
+                btnCreateUser.Enabled = false;
+                btnDeleteUser.Enabled = false;
+                btnUpdateUser.Enabled = true;
+            }
+            else if (user.Role == UserRole.ADMIN)
             {
                 btnCreateUser.Enabled = true;
                 btnDeleteUser.Enabled = true;

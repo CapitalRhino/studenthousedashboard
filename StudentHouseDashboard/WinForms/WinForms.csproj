@@ -12,4 +12,10 @@
     <ProjectReference Include="..\HouseData\StudentHouseDashboard.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="AnnouncementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

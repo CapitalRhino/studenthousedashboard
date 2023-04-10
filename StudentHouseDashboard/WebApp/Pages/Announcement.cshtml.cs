@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using StudentHouseDashboard.Managers;
+using StudentHouseDashboard.Models;
 
 namespace WebApp.Pages
 {
@@ -10,8 +11,8 @@ namespace WebApp.Pages
     {
         public void OnGet(int id)
         {
-            UserManager userManager = new UserManager();
-            ViewData.Add("user", userManager.GetUserById(id));
+            AnnouncementManager announcementManager = new AnnouncementManager();
+            ViewData.Add("announcement", announcementManager.GetAllAnnouncements().Where(x => x.ID == id).First());
         }
     }
 }

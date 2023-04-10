@@ -37,5 +37,9 @@ namespace StudentHouseDashboard.Models
         {
             throw new NotImplementedException();
         }
+        public override string ToString()
+        {
+            return $"{Title} ({PublishDate.ToString("g")} - {Author.Name})";
+        }
     }
 }

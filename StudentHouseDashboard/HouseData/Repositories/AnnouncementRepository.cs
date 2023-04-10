@@ -11,27 +11,12 @@ namespace StudentHouseDashboard.Repositories
 {
     public class AnnouncementRepository
     {
-        private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi509645;User Id=dbi509645;Password=sNPNBm*BX!6z8RM;";
         public AnnouncementRepository() { }
-        private SqlConnection CreateConnection()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Database connection error. Are you connected to the VDI VPN?");
-            }
-
-            return connection;
-        }
         public List<Announcement> GetAllAnnouncements()
         {
             List<Announcement> announcements = new List<Announcement>();
             UserManager userManager = new UserManager();
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Announcements;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -62,7 +47,7 @@ namespace StudentHouseDashboard.Repositories
             {
                 p = 0;
             }
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Announcements ORDER BY ID OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
@@ -80,6 +65,67 @@ namespace StudentHouseDashboard.Repositories
 
             }
             return announcements;
+        }
+        public bool CreateAnnouncement(string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
+        {
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
+            {
+                string sql = "INSERT INTO Announcements (Author, Description, Title, PublishDate, IsImportant, IsSticky) VALUES (@author, @desc, @title, @date, @important, @sticky);";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@author", author.ID);
+                cmd.Parameters.AddWithValue("@desc", description);
+                cmd.Parameters.AddWithValue("@title", title);
+                cmd.Parameters.AddWithValue("@date", publishDate);
+                cmd.Parameters.AddWithValue("@important", isImportant);
+                cmd.Parameters.AddWithValue("@sticky", isSticky);
+                int writer = cmd.ExecuteNonQuery();
+
+                if (writer == 1)
+                {
+                    return true;
+                }
+                else return false;
+            }
+        }
+        public bool UpdateAnnouncement(int id, string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
+        {
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
+            {
+                string sql = "UPDATE Announcements " +
+                    "SET Author = @author, Description = @desc, Title = @title, PublishDate = @date, IsImportant = @important, IsSticky = @sticky " +
+                    "WHERE Id = @id;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@author", author.ID);
+                cmd.Parameters.AddWithValue("@desc", description);
+                cmd.Parameters.AddWithValue("@title", title);
+                cmd.Parameters.AddWithValue("@date", publishDate);
+                cmd.Parameters.AddWithValue("@important", isImportant);
+                cmd.Parameters.AddWithValue("@sticky", isSticky);
+                cmd.Parameters.AddWithValue("@id", id);
+                int writer = cmd.ExecuteNonQuery();
+
+                if (writer == 1)
+                {
+                    return true;
+                }
+                else return false;
+            }
+        }
+        public bool DeleteAnnouncement(int id)
+        {
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
+            {
+                string sql = "DELETE FROM Announcements WHERE Id = @id;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                int writer = cmd.ExecuteNonQuery();
+
+                if (writer == 1)
+                {
+                    return true;
+                }
+                else return false;
+            }
         }
     }
 }

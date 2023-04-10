@@ -12,28 +12,12 @@ namespace StudentHouseDashboard.Repositories
 {
     public class UserRepository
     {
-        private string connectionString = "Server=mssqlstud.fhict.local;Database=dbi509645;User Id=dbi509645;Password=sNPNBm*BX!6z8RM;";
-
         public UserRepository() { }
-        private SqlConnection CreateConnection()
-        {
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                connection.Open();
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("Database connection error. Are you connected to the VDI VPN?");
-            }
-
-            return connection;
-        }
         public List<User> GetAllUsers()
         {
             var users = new List<User>();
 
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Users;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -54,7 +38,7 @@ namespace StudentHouseDashboard.Repositories
         }
         public User GetUserById(int id)
         {
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Users WHERE ID = @id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -81,7 +65,7 @@ namespace StudentHouseDashboard.Repositories
             {
                 p = 0;
             }
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Users ORDER BY ID OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
@@ -99,7 +83,7 @@ namespace StudentHouseDashboard.Repositories
         }
         public bool CreateUser(string name, string password, UserRole role)
         {
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "INSERT INTO Users (Name, Password, Role) VALUES (@name, @pass, @role);";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -117,7 +101,7 @@ namespace StudentHouseDashboard.Repositories
         }
         public bool UpdateUser(int id, string name, string password, UserRole role)
         {
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "UPDATE Users " +
                     "SET Name = @name, Password = @pass, Role = @role " +
@@ -138,7 +122,7 @@ namespace StudentHouseDashboard.Repositories
         }
         public bool DisableUser(int id)
         {
-            using (SqlConnection conn = CreateConnection())
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "UPDATE Users " +
                     "SET Name = 'Deleted User @id', Password = '0'" +
@@ -154,6 +138,5 @@ namespace StudentHouseDashboard.Repositories
                 else return false;
             }
         }
-
     }
 }

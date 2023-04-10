@@ -2,21 +2,27 @@
 @using StudentHouseDashboard.Models;
 @model WebApp.Pages.AnnouncementModel
 @{
-    User user = (User)ViewData["user"];
-    ViewData["Title"] = $"User {user.Name}";
+    Announcement announcement = (Announcement)ViewData["announcement"];
+    ViewData["Title"] = $"{announcement.Title}";
 }
-<h1>@user.Name</h1>
+<h1>@announcement.Title</h1>
 <div class="container">
     <div class="row">
         <div class="col">
-            <p>Name: </p>
-            <p>Password: </p>
-            <p>Role: </p>
+            <p>Title: </p>
+            <p>Author: </p>
+            <p>Description: </p>
+            <p>Date: </p>
+            <p>Important: </p>
+            <p>Pinned: </p>
         </div>
         <div class="col">
-            <p>@user.Name</p>
-            <p>@user.Password</p>
-            <p>@user.Role.ToString()</p>
+            <p>@announcement.Title</p>
+            <p>@announcement.Author.Name</p>
+            <p>@announcement.Description</p>
+            <p>@announcement.PublishDate.ToString("g")</p>
+            <p>@announcement.IsImportant.ToString()</p>
+            <p>@announcement.IsSticky.ToString()</p>
         </div>
     </div>
 </div>

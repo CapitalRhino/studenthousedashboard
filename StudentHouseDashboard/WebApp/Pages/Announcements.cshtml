@@ -1,20 +1,25 @@
 ﻿@page
 @using StudentHouseDashboard.Models;
+@using System.Security.Claims;
 @model WebApp.Pages.AnnouncementsModel
 @{
     ViewData["Title"] = "Announcements";
-    List<User> users = (List<User>)ViewData["users"];
+    List<Announcement> announcements = (List<Announcement>)ViewData["announcements"];
     int currentPage = @Convert.ToInt32(ViewData["page"]);
 }
 
-@foreach (User user in users)
+@foreach (Announcement announcement in announcements)
 {
     <div class="card" style="display:inline-block; width: 18rem;">
         <div class="card-body">
-            <h5 class="card-title">@user.Role.ToString()</h5>
-            <h6 class="card-subtitle mb-2 text-muted">@user.Name</h6>
-            <p class="card-text">@user.Password</p>
-            <a href="./Announcement?id=@user.ID" class="btn btn-primary">More details</a>
+            <h5 class="card-title">@announcement.Title</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@announcement.Author.Name</h6>
+            <p class="card-text">@announcement.Description</p>
+            <a href="./Announcement?id=@announcement.ID" class="btn btn-primary">More details</a>
+            @if (User.FindFirst(ClaimTypes.Role).Value == "ADMIN")
+            {
+                @: <a href="./Announcement?id=@announcement.ID" class="btn btn-outline-danger btn-sm">Delete</a>
+            }
         </div>
     </div>
 }
@@ -37,7 +42,7 @@
             @: <li class="page-item"><a class="page-link" href="./Announcements?p=@(currentPage - 1)">@(currentPage - 1)</a></li>
         }
         <li class="page-item"><a class="page-link">@currentPage</a></li>
-        @if (users.Count == 0)
+        @if (announcements.Count == 0)
         {
             @: <li class="page-item disabled">
         }

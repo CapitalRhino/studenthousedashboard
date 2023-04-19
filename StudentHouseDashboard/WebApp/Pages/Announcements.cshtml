@@ -14,7 +14,7 @@
         <div class="card-body">
             <h5 class="card-title">@announcement.Title</h5>
             <h6 class="card-subtitle mb-2 text-muted">@announcement.Author.Name</h6>
-            <p class="card-text">@announcement.Description</p>
+            <p class="card-text">@announcement.Description.PadRight(100).Trim()</p>
             <a href="./Announcement?id=@announcement.ID" class="btn btn-primary">More details</a>
             @if (User.FindFirst(ClaimTypes.Role).Value == "ADMIN")
             {
@@ -41,7 +41,7 @@
             @: </li>
             @: <li class="page-item"><a class="page-link" href="./Announcements?p=@(currentPage - 1)">@(currentPage - 1)</a></li>
         }
-        <li class="page-item"><a class="page-link">@currentPage</a></li>
+        <li class="page-item"><a class="page-link">@currentPage</a>
         @if (announcements.Count == 0)
         {
             @: <li class="page-item disabled">

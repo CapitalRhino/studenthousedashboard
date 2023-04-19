@@ -6,24 +6,26 @@
     ViewData["Title"] = $"{announcement.Title}";
 }
 <h1>@announcement.Title</h1>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <p>Title: </p>
-            <p>Author: </p>
-            <p>Description: </p>
-            <p>Date: </p>
-            <p>Important: </p>
-            <p>Pinned: </p>
+<p>Published @announcement.PublishDate.ToString("g") by @announcement.Author.Name 
+    @(announcement.IsImportant ? "Important" : "") @(announcement.IsSticky ? "Sticky" : "")</p>
+<hr />
+<p>@Html.Raw(announcement.Description.Replace(Environment.NewLine, "<br />"))</p>
+<br/>
+<h3>Comments</h3>
+@if (announcement.Comments.Count() == 0)
+{
+    <p>No comments found</p>
+}
+else
+{
+    foreach (Comment comment in announcement.Comments)
+    {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@comment.Author.Name</h5>
+                <p class="card-text">@Html.Raw(comment.Description.Replace(Environment.NewLine, "<br />"))</p>
+                <a href="#">Respond</a>
+            </div>
         </div>
-        <div class="col">
-            <p>@announcement.Title</p>
-            <p>@announcement.Author.Name</p>
-            <p>@announcement.Description</p>
-            <p>@announcement.PublishDate.ToString("g")</p>
-            <p>@announcement.IsImportant.ToString()</p>
-            <p>@announcement.IsSticky.ToString()</p>
-        </div>
-    </div>
-</div>
-
+    }
+}

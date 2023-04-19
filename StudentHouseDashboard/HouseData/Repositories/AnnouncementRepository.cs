@@ -24,12 +24,15 @@ namespace StudentHouseDashboard.Repositories
 
                 while (reader.Read())
                 {
-                    // ID, Name, Password, Role
-                    announcements.Add(new Announcement(Convert.ToInt32(reader["ID"]),
-                        userManager.GetUserById(Convert.ToInt32(reader["Author"])), 
-                        reader["Description"].ToString(), reader["Title"].ToString(), 
+                    Announcement announcement = new Announcement(Convert.ToInt32(reader["ID"]),
+                        userManager.GetUserById(Convert.ToInt32(reader["Author"])),
+                        reader["Description"].ToString(), reader["Title"].ToString(),
                         (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
-                        (bool)reader["IsSticky"]));
+                        (bool)reader["IsSticky"]);
+                    CommentRepository commentRepository = new CommentRepository();
+                    announcement.Comments = commentRepository.GetAllCommentsOnAnnouncement(announcement.ID);
+                    // ID, Name, Password, Role
+                    announcements.Add(announcement);
                 }
                 conn.Close();
             }

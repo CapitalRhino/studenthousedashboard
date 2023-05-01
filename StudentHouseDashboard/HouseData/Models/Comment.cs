@@ -9,8 +9,10 @@ namespace StudentHouseDashboard.Models
     {
         public Comment(int id, User author, string description, string title, DateTime publishDate) : base(id, author, description, title, publishDate)
         {
+            Responses = new List<Comment>();
         }
-
+        
+        public List<Comment> Responses { get; set; }
         public void DownVote()
         {
             throw new NotImplementedException();

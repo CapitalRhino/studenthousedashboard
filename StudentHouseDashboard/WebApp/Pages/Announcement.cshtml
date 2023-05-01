@@ -1,14 +1,20 @@
 ﻿@page
 @using StudentHouseDashboard.Models;
+@using System.Globalization
 @model WebApp.Pages.AnnouncementModel
 @{
     Announcement announcement = (Announcement)ViewData["announcement"];
     ViewData["Title"] = $"{announcement.Title}";
 }
 <h1>@announcement.Title</h1>
-<p>Published @announcement.PublishDate.ToString("g") by @announcement.Author.Name 
-    @(announcement.IsImportant ? "Important" : "") @(announcement.IsSticky ? "Sticky" : "")</p>
-<hr />
+<p>
+    Published @announcement.PublishDate.ToString("g") by @announcement.Author.Name
+    @Html.Raw((announcement.Author.Role == UserRole.ADMIN || announcement.Author.Role == UserRole.MANAGER)
+        ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(announcement.Author.Role.ToString().ToLower())})</b>"
+        : "")
+    @(announcement.IsImportant ? "Important" : "") @(announcement.IsSticky ? "Sticky" : "")
+</p>
+<hr/>
 <p>@Html.Raw(announcement.Description.Replace(Environment.NewLine, "<br />"))</p>
 <br/>
 <h3>Comments</h3>
@@ -20,11 +26,34 @@ else
 {
     foreach (Comment comment in announcement.Comments)
     {
-        <div class="card">
+        DisplayComment(comment, 0);
+    }
+}
+
+@{
+    void DisplayComment(Comment comment, int level)
+    {
+        <div class="d-flex flex-row">
+        @for (int i = 0; i < level; i++)
+        {
+            <a class="me-3" href="#"></a>
+        }
+        <div class="card flex-fill">
             <div class="card-body">
-                <h5 class="card-title">@comment.Author.Name</h5>
-                <p class="card-text">@Html.Raw(comment.Description.Replace(Environment.NewLine, "<br />"))</p>
-                <a href="#">Respond</a>
+                    <h5 class="card-title">@comment.Author.Name @Html.Raw((comment.Author.Role == UserRole.ADMIN || comment.Author.Role == UserRole.MANAGER) ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(comment.Author.Role.ToString().ToLower())})</b>" : "")</h5>
+                    <h6>@comment.PublishDate.ToString("g")</h6>
+                    <p class="card-text">@Html.Raw(comment.Description.Replace(Environment.NewLine, "<br />"))</p>
+                    <a class="btn btn-outline-success" href="#">Like</a>
+                    <a class="btn btn-outline-danger" href="#">Dislike</a>
+                    <a class="btn btn-outline-primary" href="#">Reply</a>
+                </div>
+                @if (comment.Responses.Count != 0)
+                {
+                    foreach (var response in comment.Responses)
+                    {
+                        DisplayComment(response, level + 1);
+                    }
+                }
             </div>
         </div>
     }

@@ -33,7 +33,7 @@
         @if (currentPage <= 1)
         {
             @: <li class="page-item disabled">
-            @: <a class="page-link" href="./Announcements?p=@(currentPage - 1)" tabindex="-1">Previous</a>
+            @: <a class="page-link" tabindex="-1">Previous</a>
             @: </li>
         }
         else  
@@ -44,16 +44,18 @@
             @: <li class="page-item"><a class="page-link" href="./Announcements?p=@(currentPage - 1)">@(currentPage - 1)</a></li>
         }
         <li class="page-item"><a class="page-link">@currentPage</a>
-        @if (announcements.Count == 0)
+        @if (announcements.Count == 0 || announcements.Count < Convert.ToInt32(ViewData["count"]))
         {
             @: <li class="page-item disabled">
+            @: <a class="page-link">Next</a>
+            @: </li>
         }
         else  
         {
             @: <li class="page-item"><a class="page-link" href="./Announcements?p=@(currentPage + 1)">@(currentPage + 1)</a></li>
             @: <li class="page-item">
+            @: <a class="page-link" href="./Announcements?p=@(currentPage + 1)">Next</a>
+            @: </li>
         }
-            <a class="page-link" href="./Announcements?p=@(currentPage + 1)">Next</a>
-        </li>
     </ul>
 </nav>

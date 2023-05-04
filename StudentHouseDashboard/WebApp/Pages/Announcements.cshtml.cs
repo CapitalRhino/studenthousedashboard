@@ -18,8 +18,13 @@ namespace WebApp.Pages
             {
                 p = 1;
             }
+            if (c == null || c < 1)
+            {
+                c = 10;
+            }
             ViewData.Add("announcements", AnnouncementManager.GetAnnouncementsByPage(p - 1, c));
             ViewData.Add("page", p);
+            ViewData.Add("count", c);
             ViewData.Add("allCount", AnnouncementManager.GetAllAnnouncements().Count());
         }
     }

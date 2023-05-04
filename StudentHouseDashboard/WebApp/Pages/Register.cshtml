@@ -1,4 +1,5 @@
 ﻿@page
+@using StudentHouseDashboard.Models;
 @model WebApp.Pages.RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -14,10 +15,15 @@
 }
 
 <form method="post">
-    <div class="mb-3">
-        <label asp-for="MyUser.Role" class="form-label">Role: </label>
-        <input asp-for="MyUser.Role" class="form-control" />
-    </div>
+    @if (HttpContext.User.IsInRole("ADMIN") || HttpContext.User.IsInRole("MANAGER"))
+    {
+        @: <div class="mb-3">
+            <label asp-for="MyUser.Role" class="form-label">Role: </label>
+            <select asp-for="MyUser.Role" asp-items="Html.GetEnumSelectList<UserRole>()">
+                <option>Please select a role</option>
+            </select>
+        @: </div>
+    }
     <div class="mb-3">
         <label asp-for="MyUser.Name" class="form-label">Name: </label>
         <input asp-for="MyUser.Name" class="form-control" />

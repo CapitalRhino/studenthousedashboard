@@ -28,9 +28,9 @@ namespace StudentHouseDashboard.Managers
         {
             return announcementRepository.CreateAnnouncement(title, description, author, publishDate, isImportant, isSticky);
         }
-        public bool UpdateAnnouncement(int id, string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
+        public bool UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
         {
-            return announcementRepository.UpdateAnnouncement(id, title, description, author, publishDate, isImportant, isSticky);
+            return announcementRepository.UpdateAnnouncement(id, title, description, isImportant, isSticky);
         }
         public bool DeleteAnnouncement(int id)
         {

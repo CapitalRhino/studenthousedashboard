@@ -38,6 +38,12 @@
             ckbSticky = new CheckBox();
             dtpPublishDate = new DateTimePicker();
             lblAuthor = new Label();
+            lblComments = new Label();
+            listBox1 = new ListBox();
+            btnViewComment = new Button();
+            btnEditComment = new Button();
+            btnDeleteComment = new Button();
+            btnCreateComment = new Button();
             SuspendLayout();
             // 
             // lblTitle
@@ -128,11 +134,75 @@
             lblAuthor.TabIndex = 10;
             lblAuthor.Text = "Created by: ";
             // 
+            // lblComments
+            // 
+            lblComments.AutoSize = true;
+            lblComments.Location = new Point(12, 209);
+            lblComments.Name = "lblComments";
+            lblComments.Size = new Size(66, 15);
+            lblComments.TabIndex = 11;
+            lblComments.Text = "Comments";
+            // 
+            // listBox1
+            // 
+            listBox1.FormattingEnabled = true;
+            listBox1.ItemHeight = 15;
+            listBox1.Location = new Point(12, 227);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(399, 154);
+            listBox1.TabIndex = 12;
+            // 
+            // btnViewComment
+            // 
+            btnViewComment.Location = new Point(424, 271);
+            btnViewComment.Name = "btnViewComment";
+            btnViewComment.Size = new Size(75, 23);
+            btnViewComment.TabIndex = 13;
+            btnViewComment.Text = "View";
+            btnViewComment.UseVisualStyleBackColor = true;
+            btnViewComment.Click += btnViewComment_Click;
+            // 
+            // btnEditComment
+            // 
+            btnEditComment.Location = new Point(424, 300);
+            btnEditComment.Name = "btnEditComment";
+            btnEditComment.Size = new Size(75, 23);
+            btnEditComment.TabIndex = 14;
+            btnEditComment.Text = "Edit";
+            btnEditComment.UseVisualStyleBackColor = true;
+            btnEditComment.Click += btnEditComment_Click;
+            // 
+            // btnDeleteComment
+            // 
+            btnDeleteComment.Location = new Point(424, 329);
+            btnDeleteComment.Name = "btnDeleteComment";
+            btnDeleteComment.Size = new Size(75, 23);
+            btnDeleteComment.TabIndex = 15;
+            btnDeleteComment.Text = "Delete";
+            btnDeleteComment.UseVisualStyleBackColor = true;
+            btnDeleteComment.Click += btnDeleteComment_Click;
+            // 
+            // btnCreateComment
+            // 
+            btnCreateComment.Location = new Point(424, 358);
+            btnCreateComment.Name = "btnCreateComment";
+            btnCreateComment.Size = new Size(75, 23);
+            btnCreateComment.TabIndex = 16;
+            btnCreateComment.Text = "New";
+            btnCreateComment.UseVisualStyleBackColor = true;
+            btnCreateComment.Click += btnCreateComment_Click;
+            // 
             // AnnouncementForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(511, 216);
+            ClientSize = new Size(511, 400);
+            Controls.Add(btnCreateComment);
+            Controls.Add(btnDeleteComment);
+            Controls.Add(btnEditComment);
+            Controls.Add(btnViewComment);
+            Controls.Add(listBox1);
+            Controls.Add(lblComments);
             Controls.Add(lblAuthor);
             Controls.Add(dtpPublishDate);
             Controls.Add(ckbSticky);
@@ -161,5 +231,11 @@
         private CheckBox ckbSticky;
         private DateTimePicker dtpPublishDate;
         private Label lblAuthor;
+        private Label lblComments;
+        private ListBox listBox1;
+        private Button btnViewComment;
+        private Button btnEditComment;
+        private Button btnDeleteComment;
+        private Button btnCreateComment;
     }
 }

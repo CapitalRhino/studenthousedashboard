@@ -90,18 +90,16 @@ namespace StudentHouseDashboard.Repositories
                 else return false;
             }
         }
-        public bool UpdateAnnouncement(int id, string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
+        public bool UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "UPDATE Announcements " +
-                    "SET Author = @author, Description = @desc, Title = @title, PublishDate = @date, IsImportant = @important, IsSticky = @sticky " +
+                    "SET Description = @desc, Title = @title, IsImportant = @important, IsSticky = @sticky " +
                     "WHERE Id = @id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@author", author.ID);
                 cmd.Parameters.AddWithValue("@desc", description);
                 cmd.Parameters.AddWithValue("@title", title);
-                cmd.Parameters.AddWithValue("@date", publishDate);
                 cmd.Parameters.AddWithValue("@important", isImportant);
                 cmd.Parameters.AddWithValue("@sticky", isSticky);
                 cmd.Parameters.AddWithValue("@id", id);

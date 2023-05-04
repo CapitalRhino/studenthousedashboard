@@ -22,5 +22,9 @@ namespace StudentHouseDashboard.Models
         {
             throw new NotImplementedException();
         }
+        public override string ToString()
+        {
+            return $"{Author.Name} ({PublishDate.ToString("g")}) - {Description.PadRight(100).Trim()}";
+        }
     }
 }

@@ -396,3 +396,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/StudentHouseDashboard/.idea/.idea.StudentHouseDashboard/.idea

@@ -114,28 +114,49 @@ namespace WinForms
 
         private void btnDeleteAnnouncement_Click(object sender, EventArgs e)
         {
-            Announcement currentAnnouncement = (Announcement)lbAnnouncements.SelectedItem;
-            if (MessageBox.Show($"Are you sure you want to delete\n{currentAnnouncement.Title}\nCreated at {currentAnnouncement.PublishDate.ToString("g")} by {currentAnnouncement.Author.Name}",
-                "Delete announcement", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (lbAnnouncements.SelectedIndex == -1)
             {
-                AnnouncementManager announcementManager = new AnnouncementManager();
-                announcementManager.DeleteAnnouncement(currentAnnouncement.ID);
+                MessageBox.Show("Please select an item from the list");
             }
-            RefreshLists();
+            else
+            {
+                Announcement currentAnnouncement = (Announcement)lbAnnouncements.SelectedItem;
+                if (MessageBox.Show($"Are you sure you want to delete\n{currentAnnouncement.Title}\nCreated at {currentAnnouncement.PublishDate.ToString("g")} by {currentAnnouncement.Author.Name}",
+                    "Delete announcement", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    AnnouncementManager announcementManager = new AnnouncementManager();
+                    announcementManager.DeleteAnnouncement(currentAnnouncement.ID);
+                }
+                RefreshLists();
+            }
         }
 
         private void btnEditAnnouncement_Click(object sender, EventArgs e)
         {
-            AnnouncementForm announcementForm = new AnnouncementForm((Announcement)lbAnnouncements.SelectedItem, false, null);
-            announcementForm.ShowDialog();
-            RefreshLists();
+            if (lbAnnouncements.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                AnnouncementForm announcementForm = new AnnouncementForm((Announcement)lbAnnouncements.SelectedItem, false, user);
+                announcementForm.ShowDialog();
+                RefreshLists();
+            }
         }
 
         private void btnViewAnnouncement_Click(object sender, EventArgs e)
         {
-            AnnouncementForm announcementForm = new AnnouncementForm((Announcement)lbAnnouncements.SelectedItem, true, null);
-            announcementForm.ShowDialog();
-            RefreshLists();
+            if (lbAnnouncements.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                AnnouncementForm announcementForm = new AnnouncementForm((Announcement)lbAnnouncements.SelectedItem, true, user);
+                announcementForm.ShowDialog();
+                RefreshLists();
+            }
         }
     }
 }

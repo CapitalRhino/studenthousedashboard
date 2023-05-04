@@ -12,33 +12,27 @@ using System.Windows.Forms;
 
 namespace WinForms
 {
-    public partial class AnnouncementForm : Form
+    public partial class CommentForm : Form
     {
-        Announcement announcement;
+        Comment? comment;
         User currentUser;
-        public AnnouncementForm(Announcement? announcement, bool readOnly, User currentUser)
+        bool announcementResponse;
+        int parentId;
+        public CommentForm(Comment? comment, bool readOnly, User currentUser)
         {
             InitializeComponent();
-            this.announcement = announcement;
+            this.comment = comment;
             this.currentUser = currentUser;
 
+            // restriction: no need to create events in the past
             dtpPublishDate.Enabled = false;
-            if (readOnly)
+
+            if (comment != null)
             {
-                btnSave.Enabled = false;
-                tbTitle.Enabled = false;
-                tbDescription.Enabled = false;
-                ckbImportant.Enabled = false;
-                ckbSticky.Enabled = false;
-            }
-            if (announcement != null)
-            {
-                tbTitle.Text = announcement.Title;
-                lblAuthor.Text = $"Created by: {announcement.Author.Name}";
-                tbDescription.Text = announcement.Description;
-                dtpPublishDate.Value = announcement.PublishDate;
-                ckbImportant.Checked = announcement.IsImportant;
-                ckbSticky.Checked = announcement.IsSticky;
+                tbTitle.Text = comment.Title;
+                lblAuthor.Text = $"Created by: {comment.Author.Name}";
+                tbDescription.Text = comment.Description;
+                dtpPublishDate.Value = comment.PublishDate;
                 RefreshComments();
             }
             else
@@ -48,30 +42,56 @@ namespace WinForms
                 btnEditComment.Enabled = false;
                 btnViewComment.Enabled = false;
             }
+
+            if (comment != null && currentUser != null)
+            {
+                if (currentUser.ID != comment.Author.ID)
+                {
+                    // restriction: only edit personal comments
+                    readOnly = true;
+                }
+            }
+
+            if (readOnly)
+            {
+                btnSave.Enabled = false;
+                tbTitle.Enabled = false;
+                tbDescription.Enabled = false;
+            }
+
             if (currentUser != null)
             {
                 lblAuthor.Text = $"Created by: {currentUser.Name}";
             }
         }
-
+        public CommentForm(Comment? comment, bool readOnly, User? currentUser, bool announcementResponse, int parentId) : this(comment, readOnly, currentUser)
+        {
+            this.announcementResponse = announcementResponse;
+            this.parentId = parentId;
+        }
         private void btnSave_Click(object sender, EventArgs e)
         {
-            AnnouncementManager announcementManager = new AnnouncementManager();
-            if (string.IsNullOrEmpty(tbTitle.Text))
+            CommentManager commentManager = new CommentManager();
+            if (string.IsNullOrEmpty(tbTitle.Text) || string.IsNullOrEmpty(tbDescription.Text))
             {
-                MessageBox.Show("Please enter a title");
+                MessageBox.Show("Please enter a title and comment text");
                 return;
             }
-
-            if (this.announcement == null)
+            if (this.comment == null)
             {
-                announcementManager.CreateAnnouncement(tbTitle.Text, tbDescription.Text, currentUser, dtpPublishDate.Value, ckbImportant.Checked, ckbSticky.Checked);
+                if (announcementResponse)
+                {
+                    commentManager.CreateCommentToAnnouncement(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
+                }
+                else
+                {
+                    commentManager.CreateResponseToComment(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
+                }
             }
             else
             {
-                announcementManager.UpdateAnnouncement(announcement.ID, tbTitle.Text, tbDescription.Text, ckbImportant.Checked, ckbSticky.Checked);
+                commentManager.UpdateComment(comment.ID, tbDescription.Text);
             }
-            this.DialogResult = DialogResult.OK;
         }
 
         private void btnViewComment_Click(object sender, EventArgs e)
@@ -86,6 +106,7 @@ namespace WinForms
                 form.ShowDialog();
                 RefreshComments();
             }
+            
         }
 
         private void btnEditComment_Click(object sender, EventArgs e)
@@ -110,12 +131,12 @@ namespace WinForms
             }
             else
             {
-                Comment currentComment = (Comment)listBox1.SelectedItem;
-                if (MessageBox.Show($"Are you sure you want to delete\n{currentComment.Title}\nCreated at {currentComment.PublishDate.ToString("g")} by {currentComment.Author.Name}",
+                Comment currentResponse = (Comment)listBox1.SelectedItem;
+                if (MessageBox.Show($"Are you sure you want to delete\n{currentResponse.Title}\nCreated at {currentResponse.PublishDate.ToString("g")} by {currentResponse.Author.Name}",
         "Delete announcement", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     CommentManager commentManager = new CommentManager();
-                    commentManager.DeleteCommentOnAnnouncement(currentComment.ID, announcement.ID);
+                    commentManager.DeleteResponseOnComment(currentResponse.ID, comment.ID);
                 }
                 RefreshComments();
             }
@@ -123,15 +144,14 @@ namespace WinForms
 
         private void btnCreateComment_Click(object sender, EventArgs e)
         {
-            CommentForm form = new CommentForm(null, false, currentUser, true, announcement.ID);
+            CommentForm form = new CommentForm(null, false, currentUser, false, comment.ID);
             form.ShowDialog();
             RefreshComments();
         }
-
         private void RefreshComments()
         {
             listBox1.Items.Clear();
-            foreach (var item in announcement.Comments)
+            foreach (var item in comment.Responses)
             {
                 listBox1.Items.Add(item);
             }

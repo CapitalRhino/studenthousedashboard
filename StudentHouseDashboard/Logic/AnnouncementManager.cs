@@ -1,5 +1,5 @@
-﻿using StudentHouseDashboard.Models;
-using StudentHouseDashboard.Repositories;
+﻿using Models;
+using Data;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentHouseDashboard.Managers
+namespace Logic
 {
     public class AnnouncementManager
     {

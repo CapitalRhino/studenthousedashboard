@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentHouseDashboard.Repositories
+namespace Data
 {
     public static class SqlConnectionHelper
     {
@@ -17,9 +17,10 @@ namespace StudentHouseDashboard.Repositories
             {
                 connection.Open();
             }
-            catch (Exception)
+            catch (SqlException e)
             {
-                Console.WriteLine("Database connection error. Are you connected to the VDI VPN?");
+                throw new DatabaseNetworkException("Unable to access FHICT VDI database", e);
+                // Console.WriteLine("Database connection error. Are you connected to the VDI VPN?");
             }
 
             return connection;

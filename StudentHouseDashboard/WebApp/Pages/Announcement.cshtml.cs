@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using StudentHouseDashboard.Managers;
-using StudentHouseDashboard.Models;
+using Logic;
+using Models;
 
 namespace WebApp.Pages
 {

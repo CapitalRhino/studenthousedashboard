@@ -1,8 +1,8 @@
 using System.ComponentModel.Design;
 using System.Data.SqlClient;
-using StudentHouseDashboard.Models;
+using Models;
 
-namespace StudentHouseDashboard.Repositories;
+namespace Data;
 
 public class CommentRepository
 {

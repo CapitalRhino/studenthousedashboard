@@ -1,5 +1,5 @@
-﻿using StudentHouseDashboard.Managers;
-using StudentHouseDashboard.Models;
+﻿using Logic;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -61,26 +61,47 @@ namespace WinForms
 
         private void btnDeleteUser_Click(object sender, EventArgs e)
         {
-            User currentUser = (User)lbUsers.SelectedItem;
-            if (MessageBox.Show($"Are you sure you want to delete\n{currentUser.Name}\n{currentUser.Role}", "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (lbUsers.SelectedIndex == -1)
             {
-                UserManager userManager = new UserManager();
-                userManager.DisableUser(currentUser.ID);
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                User currentUser = (User)lbUsers.SelectedItem;
+                if (MessageBox.Show($"Are you sure you want to delete\n{currentUser.Name}\n{currentUser.Role}", "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    UserManager userManager = new UserManager();
+                    userManager.DisableUser(currentUser.ID);
+                }
             }
             RefreshLists();
         }
 
         private void btnUpdateUser_Click(object sender, EventArgs e)
         {
-            UserForm userForm = new UserForm((User)lbUsers.SelectedItem, false);
-            userForm.ShowDialog();
+            if (lbUsers.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                UserForm userForm = new UserForm((User)lbUsers.SelectedItem, false);
+                userForm.ShowDialog();
+            }
             RefreshLists();
         }
 
         private void btnViewUser_Click(object sender, EventArgs e)
         {
-            UserForm userForm = new UserForm((User)lbUsers.SelectedItem, true);
-            userForm.ShowDialog();
+            if (lbUsers.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                UserForm userForm = new UserForm((User)lbUsers.SelectedItem, true);
+                userForm.ShowDialog();
+            }
             RefreshLists();
         }
 

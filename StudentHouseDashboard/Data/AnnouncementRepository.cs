@@ -1,5 +1,4 @@
-﻿using StudentHouseDashboard.Managers;
-using StudentHouseDashboard.Models;
+﻿using Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StudentHouseDashboard.Repositories
+namespace Data
 {
     public class AnnouncementRepository
     {
@@ -15,7 +14,7 @@ namespace StudentHouseDashboard.Repositories
         public List<Announcement> GetAllAnnouncements()
         {
             List<Announcement> announcements = new List<Announcement>();
-            UserManager userManager = new UserManager();
+            UserRepository userRepository = new UserRepository();
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Announcements;";
@@ -25,7 +24,7 @@ namespace StudentHouseDashboard.Repositories
                 while (reader.Read())
                 {
                     Announcement announcement = new Announcement(Convert.ToInt32(reader["ID"]),
-                        userManager.GetUserById(Convert.ToInt32(reader["Author"])),
+                        userRepository.GetUserById(Convert.ToInt32(reader["Author"])),
                         reader["Description"].ToString(), reader["Title"].ToString(),
                         (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
                         (bool)reader["IsSticky"]);
@@ -41,7 +40,7 @@ namespace StudentHouseDashboard.Repositories
         public List<Announcement> GetAnnouncementsByPage(int? p, int? c)
         {
             List<Announcement> announcements = new List<Announcement>();
-            UserManager userManager = new UserManager();
+            UserRepository userRepository = new UserRepository();
             if (c == null || c < 0)
             {
                 c = 10;
@@ -60,7 +59,7 @@ namespace StudentHouseDashboard.Repositories
                 while (reader.Read())
                 {
                     announcements.Add(new Announcement(Convert.ToInt32(reader["ID"]),
-                        userManager.GetUserById(Convert.ToInt32(reader["Author"])),
+                        userRepository.GetUserById(Convert.ToInt32(reader["Author"])),
                         reader["Description"].ToString(), reader["Title"].ToString(),
                         (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
                         (bool)reader["IsSticky"]));

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using StudentHouseDashboard.Models;
+using Models;
 using System.Data;
 using System.Xml.Linq;
 
-namespace StudentHouseDashboard.Repositories
+namespace Data
 {
     public class UserRepository
     {

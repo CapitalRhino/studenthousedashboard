@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace StudentHouseDashboard.Models
+namespace Models
 {
     public enum UserRole
     {

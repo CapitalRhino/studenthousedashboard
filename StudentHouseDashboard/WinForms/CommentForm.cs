@@ -1,5 +1,5 @@
-﻿using StudentHouseDashboard.Managers;
-using StudentHouseDashboard.Models;
+﻿using Logic;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

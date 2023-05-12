@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace StudentHouseDashboard.Models
+namespace Models
 {
     public class User
     {
@@ -34,7 +35,8 @@ namespace StudentHouseDashboard.Models
             get => name;
             set => name = value;
         }
-        [PasswordPropertyText(true)]
+
+        [DataType(DataType.Password)]
         public string Password
         {
             get => password;

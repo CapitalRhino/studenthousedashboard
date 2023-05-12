@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using StudentHouseDashboard.Models;
-using StudentHouseDashboard.Managers;
+using Models;
+using Logic;
 using System.Security.Claims;
 
 namespace WebApp.Pages

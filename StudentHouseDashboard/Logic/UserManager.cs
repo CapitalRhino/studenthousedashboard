@@ -1,6 +1,6 @@
 ﻿using BCrypt.Net;
-using StudentHouseDashboard.Models;
-using StudentHouseDashboard.Repositories;
+using Models;
+using Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace StudentHouseDashboard.Managers
+namespace Logic
 {
     public class UserManager
     {

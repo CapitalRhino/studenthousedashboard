@@ -1,5 +1,5 @@
-﻿using StudentHouseDashboard.Managers;
-using StudentHouseDashboard.Models;
+﻿using Logic;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,7 +34,6 @@ namespace WinForms
             if (user != null)
             {
                 tbUsername.Text = user.Name;
-                tbPassword.Text = user.Password;
                 cbUserRole.SelectedIndex = (int)user.Role;
             }
 
@@ -55,7 +54,14 @@ namespace WinForms
             }
             else
             {
-                userManager.UpdateUser(this.user.ID, tbUsername.Text, BCrypt.Net.BCrypt.HashPassword(tbPassword.Text), (UserRole)cbUserRole.SelectedItem);
+                if (string.IsNullOrEmpty(tbPassword.Text))
+                {
+                    //userManager.UpdateUser(this.user.ID, tbUsername.Text,)
+                }
+                else
+                {
+                    userManager.UpdateUser(this.user.ID, tbUsername.Text, BCrypt.Net.BCrypt.HashPassword(tbPassword.Text), (UserRole)cbUserRole.SelectedItem);
+                }
             }
             this.DialogResult = DialogResult.OK;
         }

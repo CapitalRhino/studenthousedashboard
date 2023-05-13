@@ -1,0 +1,30 @@
+﻿@page
+@model WebApp.Pages.CreateAnnouncementModel
+@{
+    ViewData["Title"] = "Create announcement";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+    <div class="mb-3">
+    <label asp-for="Announcement.Title" class="form-label">Title: </label>
+    <input asp-for="Announcement.Title" class="form-control" />
+    </div>
+    @if (HttpContext.User.IsInRole("ADMIN") || HttpContext.User.IsInRole("MANAGER"))
+    {
+        <div class="mb-3">
+            <label asp-for="Announcement.IsImportant" class="form-label">Important: </label>
+            @Html.CheckBoxFor(model => model.Announcement.IsImportant)
+        </div>
+        <div class="mb-3">
+            <label asp-for="Announcement.IsSticky" class="form-label">Pinned: </label>
+            @Html.CheckBoxFor(model => model.Announcement.IsSticky)
+        </div>
+    }
+    <div class="mb-3">
+        <label asp-for="Announcement.Description" class="form-label">Description: </label>
+        <textarea asp-for="Announcement.Description" class="form-control" rows="5"></textarea>
+    </div>
+    <input type="submit" value="Create" class="btn btn-primary" />
+</form>

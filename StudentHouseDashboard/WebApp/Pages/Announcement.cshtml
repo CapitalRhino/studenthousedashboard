@@ -1,6 +1,7 @@
 ﻿@page
 @using Models;
 @using System.Globalization
+@using System.Security.Claims;
 @model WebApp.Pages.AnnouncementModel
 @{
     Announcement announcement = (Announcement)ViewData["announcement"];
@@ -13,6 +14,13 @@
         ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(announcement.Author.Role.ToString().ToLower())})</b>"
         : "")
     @(announcement.IsImportant ? "Important" : "") @(announcement.IsSticky ? "Sticky" : "")
+</p>
+<p>
+    @if (User.FindFirst(ClaimTypes.Role).Value == "ADMIN" || User.Identity.Name == announcement.Author.Name)
+    {
+        <a href="./EditAnnouncement?id=@announcement.ID" class="btn btn-outline-warning">Edit</a>
+        <a href="./DeleteAnnouncement?id=@announcement.ID" class="btn btn-outline-danger">Delete</a>
+    }
 </p>
 <hr/>
 <p>@Html.Raw(announcement.Description.Replace(Environment.NewLine, "<br />"))</p>

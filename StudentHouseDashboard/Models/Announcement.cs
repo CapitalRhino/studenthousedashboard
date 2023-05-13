@@ -13,6 +13,10 @@ namespace Models
             IsSticky = isSticky;
         }
 
+        public Announcement()
+        {
+            
+        }
         public List<Comment> Comments
         {
             get;set;

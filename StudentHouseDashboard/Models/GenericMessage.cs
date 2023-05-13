@@ -20,7 +20,10 @@ namespace Models
             Title = title;
             PublishDate = publishDate;
         }
-
+        protected GenericMessage()
+        {
+            
+        }
         public int ID
         {
             get; private set;

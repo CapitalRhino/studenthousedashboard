@@ -125,10 +125,10 @@ namespace Data
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "UPDATE Users " +
-                    "SET Name = 'Deleted User @id', Password = '0'" +
+                    "SET Name = 'Deleted User ' + @id, Password = '0'" +
                     "WHERE ID = @id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@id", id.ToString());
                 int writer = cmd.ExecuteNonQuery();
 
                 if (writer == 1)

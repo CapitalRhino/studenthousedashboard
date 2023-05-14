@@ -4,7 +4,18 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1>Student House Dashboard</h1>
-    <a class="btn btn-primary" asp-page="Announcements">Announcements</a>
+<div class="bg-image text-white shadow-1-strong p-5 text-center bg-body-tertiary rounded-3" style="background: url(https://images.pexels.com/photos/1036804/pexels-photo-1036804.jpeg?h=800) no-repeat center center; background-size: 100%;">
+    <h1 class="text-body-emphasis">Student House Dashboard</h1>
+    <p class="lead">
+        The student square for housemates! This site is currently under construction.
+    </p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-primary" asp-page="Login">Login</a>
+    }
+    else
+    {
+        <a class="btn btn-primary" asp-page="Announcements">Announcements</a>
+    }
 </div>
+<a>Image: pexels.com</a>

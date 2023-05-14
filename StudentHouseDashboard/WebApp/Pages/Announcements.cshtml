@@ -15,9 +15,12 @@
     {
         <div class="card" style="display:inline-flex; width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">@announcement.Title</h5>
+                <h5 class="card-title" @if (announcement.IsImportant)
+                {
+                    @: style="color: red;"
+                }>@announcement.Title</h5>
                 <h6 class="card-subtitle mb-2 text-muted">@announcement.Author.Name</h6>
-                <p class="card-text">@announcement.Description.PadRight(100).Trim()</p>
+                <p class="card-text">@announcement.Description.PadRight(100).Substring(0,100).Trim()</p>
                 <a href="./Announcement?id=@announcement.ID" class="btn btn-primary">More details</a>
             </div>
         </div>

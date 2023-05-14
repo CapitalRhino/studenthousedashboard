@@ -37,6 +37,27 @@ namespace Data
             }
             return announcements;
         }
+        public Announcement GetAnnouncementById(int id)
+        {
+            UserRepository userRepository = new UserRepository();
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
+            {
+                string sql = "SELECT * FROM Announcements WHERE ID = @id;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("id", id);
+                var reader = cmd.ExecuteReader();
+                reader.Read();
+                    Announcement announcement = new Announcement(Convert.ToInt32(reader["ID"]),
+                        userRepository.GetUserById(Convert.ToInt32(reader["Author"])),
+                        reader["Description"].ToString(), reader["Title"].ToString(),
+                        (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
+                        (bool)reader["IsSticky"]);
+                    CommentRepository commentRepository = new CommentRepository();
+                    announcement.Comments = commentRepository.GetAllCommentsOnAnnouncement(announcement.ID);
+                conn.Close();
+                return announcement;
+            }
+        }
         public List<Announcement> GetAnnouncementsByPage(int? p, int? c)
         {
             List<Announcement> announcements = new List<Announcement>();

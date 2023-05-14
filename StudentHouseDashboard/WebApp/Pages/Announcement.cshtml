@@ -7,13 +7,17 @@
     Announcement announcement = (Announcement)ViewData["announcement"];
     ViewData["Title"] = $"{announcement.Title}";
 }
-<h1>@announcement.Title</h1>
+<h1 @if (announcement.IsImportant)
+{
+    @: style="color: red;"
+}>@announcement.Title
+</h1>
 <p>
     Published @announcement.PublishDate.ToString("g") by @announcement.Author.Name
     @Html.Raw((announcement.Author.Role == UserRole.ADMIN || announcement.Author.Role == UserRole.MANAGER)
         ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(announcement.Author.Role.ToString().ToLower())})</b>"
         : "")
-    @(announcement.IsImportant ? "Important" : "") @(announcement.IsSticky ? "Sticky" : "")
+    @(announcement.IsSticky ? "Pinned" : "")
 </p>
 <p>
     @if (User.FindFirst(ClaimTypes.Role).Value == "ADMIN" || User.Identity.Name == announcement.Author.Name)

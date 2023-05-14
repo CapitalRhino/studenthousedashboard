@@ -26,7 +26,7 @@ namespace Models
         }
         public int ID
         {
-            get; private set;
+            get; set;
         }
 
         public User Author

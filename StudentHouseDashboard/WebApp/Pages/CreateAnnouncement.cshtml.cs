@@ -13,13 +13,13 @@ namespace WebApp.Pages
         public void OnGet()
         {
         }
-        public void OnPost()
+        public IActionResult OnPost()
         {
             AnnouncementManager announcementManager = new AnnouncementManager();
             UserManager userManager = new UserManager();
             User user = userManager.GetUserById(int.Parse(User.FindFirstValue("id")));
             announcementManager.CreateAnnouncement(Announcement.Title, Announcement.Description, user, DateTime.Now, Announcement.IsImportant, Announcement.IsSticky);
-            RedirectToPage("Announcements");
+            return RedirectToPage("Announcements");
         }
     }
 }

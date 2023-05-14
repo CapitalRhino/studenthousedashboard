@@ -20,6 +20,10 @@ namespace Logic
         {
             return announcementRepository.GetAllAnnouncements();
         }
+        public Announcement GetAnnouncementById(int id)
+        {
+            return announcementRepository.GetAnnouncementById(id);
+        }
         public List<Announcement> GetAnnouncementsByPage(int? p, int? c)
         {
             return announcementRepository.GetAnnouncementsByPage(p, c);
@@ -30,6 +34,7 @@ namespace Logic
         }
         public bool UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
         {
+            description += $"{Environment.NewLine}{Environment.NewLine}Updated: {DateTime.Now.ToString("g")}";
             return announcementRepository.UpdateAnnouncement(id, title, description, isImportant, isSticky);
         }
         public bool DeleteAnnouncement(int id)

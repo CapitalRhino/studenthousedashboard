@@ -1,14 +1,17 @@
 ﻿using Models;
+using Logic;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logic.Exceptions;
+using System.Reflection;
 
 namespace Data
 {
-    public class AnnouncementRepository
+    public class AnnouncementRepository : IAnnouncementRepository
     {
         public AnnouncementRepository() { }
         public List<Announcement> GetAllAnnouncements()
@@ -58,21 +61,21 @@ namespace Data
                 return announcement;
             }
         }
-        public List<Announcement> GetAnnouncementsByPage(int? p, int? c)
+        public List<Announcement> GetAnnouncementsByPage(int p, int c)
         {
             List<Announcement> announcements = new List<Announcement>();
             UserRepository userRepository = new UserRepository();
-            if (c == null || c < 0)
+            if (c == null)
             {
-                c = 10;
+                throw new DatabaseOperationException("Get announcements: Invalid item count");
             }
-            if (p == null || p < 0)
+            if (p == null)
             {
-                p = 0;
+                throw new DatabaseOperationException("Get announcements: Invalid page number");
             }
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
-                string sql = "SELECT * FROM Announcements ORDER BY ID OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
+                string sql = "SELECT * FROM Announcements ORDER BY ID DESC OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
                 sqlCommand.Parameters.AddWithValue("@start", p * c);
                 sqlCommand.Parameters.AddWithValue("@count", c);
@@ -89,7 +92,7 @@ namespace Data
             }
             return announcements;
         }
-        public bool CreateAnnouncement(string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
+        public void CreateAnnouncement(string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
@@ -102,15 +105,13 @@ namespace Data
                 cmd.Parameters.AddWithValue("@important", isImportant);
                 cmd.Parameters.AddWithValue("@sticky", isSticky);
                 int writer = cmd.ExecuteNonQuery();
-
-                if (writer == 1)
+                if (writer != 1)
                 {
-                    return true;
+                    throw new DatabaseOperationException("Database error: Announcement not created");
                 }
-                else return false;
             }
         }
-        public bool UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
+        public void UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
@@ -124,15 +125,13 @@ namespace Data
                 cmd.Parameters.AddWithValue("@sticky", isSticky);
                 cmd.Parameters.AddWithValue("@id", id);
                 int writer = cmd.ExecuteNonQuery();
-
-                if (writer == 1)
+                if (writer != 1)
                 {
-                    return true;
+                    throw new DatabaseOperationException("Database error: Announcement not updated");
                 }
-                else return false;
             }
         }
-        public bool DeleteAnnouncement(int id)
+        public void DeleteAnnouncement(int id)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
@@ -140,13 +139,54 @@ namespace Data
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 int writer = cmd.ExecuteNonQuery();
-
-                if (writer == 1)
+                if (writer != 1)
                 {
-                    return true;
+                    throw new DatabaseOperationException("Database error: Announcement not deleted");
                 }
-                else return false;
             }
+        }
+
+        public List<Announcement> SearchAnnouncement(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                throw new DatabaseOperationException("Search announements error: Search query is empty");
+            }
+            List<Announcement> announcements = new List<Announcement>();
+            UserRepository userRepository = new UserRepository();
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM Announcements ");
+            string[] searchStrings = query.Trim().Split(' ');
+            for (int i = 0; i < searchStrings.Length; i++)
+            {
+                if (i == 0)
+                {
+                    sql.Append($"WHERE Title LIKE @query{i} OR Description LIKE @query{i} ");
+                }
+                else
+                {
+                    sql.Append($"OR Title LIKE @query{i} OR Description LIKE @query{i} ");
+                }
+            }
+            sql.Append(';');
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
+            {
+                SqlCommand sqlCommand = new SqlCommand(sql.ToString(), conn);
+                for (int i = 0; i < searchStrings.Length; i++)
+                {
+                    sqlCommand.Parameters.AddWithValue($"@query{i}", $"%{searchStrings[i]}%");
+                }
+                var reader = sqlCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    announcements.Add(new Announcement(Convert.ToInt32(reader["ID"]),
+                        userRepository.GetUserById(Convert.ToInt32(reader["Author"])),
+                        reader["Description"].ToString(), reader["Title"].ToString(),
+                        (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
+                        (bool)reader["IsSticky"]));
+                }
+            }
+            return announcements;
         }
     }
 }

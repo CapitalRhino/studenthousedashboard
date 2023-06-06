@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Models;
 using Logic;
 using System.Security.Claims;
+using Data;
 
 namespace WebApp.Pages
 {
@@ -19,7 +20,7 @@ namespace WebApp.Pages
 
         public IActionResult OnPost(string? returnUrl)
         {
-            var userManager = new UserManager();
+            var userManager = new UserManager(new UserRepository());
             User? user = userManager.AuthenticatedUser(MyUser.Name, MyUser.Password);
             if (user != null)
             {

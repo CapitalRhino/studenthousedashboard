@@ -10,11 +10,17 @@ namespace WebApp.Pages
     [Authorize]
     public class DeleteAnnouncementModel : PageModel
     {
+        private readonly IAnnouncementRepository _announcementRepository;
+
+        public DeleteAnnouncementModel(IAnnouncementRepository announcementRepository)
+        {
+            _announcementRepository = announcementRepository;
+        }
         [BindProperty]
         public int AnnouncementId { get; set; }
         public void OnGet(int id)
         {
-            AnnouncementManager announcementManager = new AnnouncementManager();
+            AnnouncementManager announcementManager = new AnnouncementManager(_announcementRepository);
             if (id != null)
             {
                 Announcement announcement = announcementManager.GetAnnouncementById(id);
@@ -26,7 +32,7 @@ namespace WebApp.Pages
         }
         public IActionResult OnPost()
         {
-            AnnouncementManager announcementManager = new AnnouncementManager();
+            AnnouncementManager announcementManager = new AnnouncementManager(_announcementRepository);
             announcementManager.DeleteAnnouncement(AnnouncementId);
             return RedirectToPage("Announcements");
         }

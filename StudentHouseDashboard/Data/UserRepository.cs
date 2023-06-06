@@ -7,10 +7,11 @@ using System.Data.SqlClient;
 using Models;
 using System.Data;
 using System.Xml.Linq;
+using Logic;
 
 namespace Data
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         public UserRepository() { }
         public List<User> GetAllUsers()
@@ -54,17 +55,9 @@ namespace Data
                         (UserRole)reader["Role"]);
             }
         }
-        public List<User> GetUsersByPage(int? p, int? c)
+        public List<User> GetUsersByPage(int p, int c)
         {
             List<User> users = new List<User>();
-            if (c == null || c < 0)
-            {
-                c = 10;
-            }
-            if (p == null || p < 0)
-            {
-                p = 0;
-            }
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
                 string sql = "SELECT * FROM Users ORDER BY ID OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
@@ -81,25 +74,20 @@ namespace Data
             }
             return users;
         }
-        public bool CreateUser(string name, string password, UserRole role)
+        public User CreateUser(string name, string password, UserRole role)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
-                string sql = "INSERT INTO Users (Name, Password, Role) VALUES (@name, @pass, @role);";
+                string sql = "INSERT INTO Users (Name, Password, Role) VALUES (@name, @pass, @role) " +
+                    "SELECT SCOPE_IDENTITY();";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@pass", password);
                 cmd.Parameters.AddWithValue("@role", (int)role);
-                int writer = cmd.ExecuteNonQuery();
-
-                if (writer == 1)
-                {
-                    return true;
-                }
-                else return false;
+                return GetUserById(Convert.ToInt32(cmd.ExecuteScalar()));
             }
         }
-        public bool UpdateUser(int id, string name, string password, UserRole role)
+        public void UpdateUser(int id, string name, string password, UserRole role)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
@@ -111,16 +99,10 @@ namespace Data
                 cmd.Parameters.AddWithValue("@pass", password);
                 cmd.Parameters.AddWithValue("@role", (int)role);
                 cmd.Parameters.AddWithValue("@id", id);
-                int writer = cmd.ExecuteNonQuery();
-
-                if (writer == 1)
-                {
-                    return true;
-                }
-                else return false;
+                cmd.ExecuteNonQuery();
             }
         }
-        public bool DisableUser(int id)
+        public void DisableUser(int id)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
@@ -129,13 +111,21 @@ namespace Data
                     "WHERE ID = @id;";
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@id", id.ToString());
-                int writer = cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
+            }
+        }
 
-                if (writer == 1)
-                {
-                    return true;
-                }
-                else return false;
+        public User GetUserByName(string userName)
+        {
+            using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
+            {
+                string sql = "SELECT * FROM Users WHERE Name = @userName;";
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@userName", userName);
+                var reader = cmd.ExecuteReader();
+
+                return new User(Convert.ToInt32(reader["ID"]), reader["Name"].ToString(),
+                        reader["Password"].ToString(), (UserRole)reader["Role"]);
             }
         }
     }

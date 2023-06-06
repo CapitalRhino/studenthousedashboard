@@ -9,10 +9,6 @@ namespace Models
 {
     public class User
     {
-        private int id;
-        private string name;
-        private string password;
-        private UserRole role;
 
         public User(int id, string name, string password, UserRole role)
         {
@@ -23,29 +19,26 @@ namespace Models
         }
         public User()
         {
-            
+
         }
         public int ID
         {
-            get; private set;
+            get; set;
         }
 
         public string Name
         {
-            get => name;
-            set => name = value;
+            get; set;
         }
 
         [DataType(DataType.Password)]
         public string Password
         {
-            get => password;
-            set => password = value;
+            get; set;
         }
         public UserRole Role
         {
-            get => role;
-            set => role = value;
+            get; set;
         }
         public override string ToString()
         {

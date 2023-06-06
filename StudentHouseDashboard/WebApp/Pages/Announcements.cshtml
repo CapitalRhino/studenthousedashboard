@@ -4,11 +4,25 @@
 @model WebApp.Pages.AnnouncementsModel
 @{
     ViewData["Title"] = "Announcements";
-    List<Announcement> announcements = ((List<Announcement>)ViewData["announcements"]).OrderByDescending(x => x.PublishDate).OrderByDescending(x => x.IsSticky).ToList();
-    int currentPage = @Convert.ToInt32(ViewData["page"]);
+    List<Announcement> announcements = ((List<Announcement>)ViewData["announcements"]).OrderByDescending(x => x.IsSticky).ToList();
+    int currentPage = 0;
+    if (ViewData["page"] != null)
+    {
+        currentPage = Convert.ToInt32(ViewData["page"]);
+    }
 }
 
 <a href="./CreateAnnouncement" class="btn btn-primary">Create new announcement</a>
+
+<form  method="get">  
+    <div class="form-actions no-color">  
+        <p>  
+            <input type="hidden" name="handler" value="search" />
+            <input type="text" name="s" />  
+            <input type="submit" asp-page-handler="Search" value="Search" class="btn btn-default" />
+        </p>  
+    </div>  
+</form>  
 
 <div class="mb-3 mt-3">
     @foreach (Announcement announcement in announcements)
@@ -27,7 +41,9 @@
     }
 </div>
 
-<nav aria-label="Page navigation">
+@if (ViewData["page"] != null)
+{
+ <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         @if (currentPage <= 1)
         {
@@ -57,4 +73,5 @@
             @: </li>
         }
     </ul>
-</nav>
+</nav>   
+}

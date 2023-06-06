@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logic.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,7 +21,6 @@ namespace Data
             catch (SqlException e)
             {
                 throw new DatabaseNetworkException("Unable to access FHICT VDI database", e);
-                // Console.WriteLine("Database connection error. Are you connected to the VDI VPN?");
             }
 
             return connection;

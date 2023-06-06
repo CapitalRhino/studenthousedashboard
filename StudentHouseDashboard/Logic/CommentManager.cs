@@ -1,5 +1,4 @@
 ﻿using Models;
-using Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +9,10 @@ namespace Logic
 {
     public class CommentManager
     {
-        private CommentRepository commentRepository;
-        public CommentManager()
+        private ICommentRepository commentRepository;
+        public CommentManager(ICommentRepository commentRepository)
         {
-            commentRepository = new CommentRepository();
+            this.commentRepository = commentRepository;
         }
         
         public void CreateCommentToAnnouncement(User author, string description, string title, DateTime publishDate, int announcementId)

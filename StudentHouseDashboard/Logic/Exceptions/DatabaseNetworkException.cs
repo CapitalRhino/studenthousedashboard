@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data
+namespace Logic.Exceptions
 {
     public class DatabaseNetworkException : WebException
     {

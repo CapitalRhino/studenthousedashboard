@@ -1,6 +1,5 @@
 ﻿using BCrypt.Net;
 using Models;
-using Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -15,10 +14,10 @@ namespace Logic
 {
     public class UserManager
     {
-        private UserRepository userRepository;
-        public UserManager()
+        private readonly IUserRepository userRepository;
+        public UserManager(IUserRepository userRepository)
         {
-            userRepository = new UserRepository();
+            this.userRepository = userRepository;
         }
         public List<User> GetAllUsers()
         {
@@ -28,29 +27,38 @@ namespace Logic
         {
             return userRepository.GetUserById(id);
         }
-        public List<User> GetUsersByPage(int? p, int? c)
+        public List<User> GetUsersByPage(int p = 0, int c = 10)
         {
             return userRepository.GetUsersByPage(p, c);
         }
         public User? AuthenticatedUser(string name, string password)
         {
             List<User> users = userRepository.GetAllUsers();
-            User user = users.Find(x => x.Name == name);
-            if (user == null)
+            User? user = users.Find(x => x.Name == name);
+            if (name == null || password == null)
             {
-                return null;
+                throw new ArgumentNullException();
             }
-            else
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
-                if (BCrypt.Net.BCrypt.Verify(password, user.Password))
-                {
-                    return user;
-                }
-                else return null;
+                return user;
             }
+            return null;
         }
-        public bool CreateUser(string name, string password, UserRole role)
+        public bool UserExists(string name)
         {
+            return userRepository.GetUserByName(name) != null;
+        }
+        public User CreateUser(string name, string password, UserRole role)
+        {
+            if (UserExists(name))
+            {
+                throw new ArgumentException("User with given username already exists!");
+            }
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Name or password should not be empty");
+            }
             return userRepository.CreateUser(name, password, role);
         }
         public void UpdateUser(int id, string name, string password, UserRole role)

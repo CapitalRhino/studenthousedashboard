@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models
 {
-    public class Comment : GenericMessage, IVotable
+    public class Comment : GenericMessage
     {
         public Comment(int id, User author, string description, string title, DateTime publishDate) : base(id, author, description, title, publishDate)
         {
@@ -13,15 +13,6 @@ namespace Models
         }
         
         public List<Comment> Responses { get; set; }
-        public void DownVote()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpVote()
-        {
-            throw new NotImplementedException();
-        }
         public override string ToString()
         {
             return $"{Author.Name} ({PublishDate.ToString("g")}) - {Description.PadRight(100).Trim()}";

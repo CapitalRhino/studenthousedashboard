@@ -7,11 +7,6 @@ namespace Models
 {
     public abstract class GenericMessage
     {
-        private User author;
-        private string description;
-        private string title;
-        private DateTime publishDate;
-
         protected GenericMessage(int id, User author, string description, string title, DateTime publishDate)
         {
             ID = id;
@@ -31,23 +26,19 @@ namespace Models
 
         public User Author
         {
-            get => author;
-            set => author = value;
+            get;set;
         }
         public string Description
         {
-            get => description;
-            set => description = value;
+            get;set;
         }
         public string Title
         {
-            get => title;
-            set => title = value;
+            get;set;
         }
         public DateTime PublishDate
         {
-            get => publishDate;
-            set => publishDate = value;
+            get; set;
         }
     }
 }

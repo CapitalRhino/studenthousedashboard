@@ -1,0 +1,60 @@
+﻿using Logic;
+using Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+
+namespace Tests.Mocks
+{
+    public class AnnouncementRepositoryFake : IAnnouncementRepository
+    {
+        private List<Announcement> announcements;
+        private int currentId;
+
+        public AnnouncementRepositoryFake() 
+        {
+            announcements = new List<Announcement>();
+            currentId = 1;
+        }
+
+        public void CreateAnnouncement(string title, string description, User author, DateTime publishDate, bool isImportant, bool isSticky)
+        {
+            announcements.Add(new Announcement(currentId, author, description, title, publishDate, isImportant, isSticky));
+            currentId++;
+        }
+
+        public void DeleteAnnouncement(int id)
+        {
+            announcements.RemoveAt(id--);
+        }
+
+        public List<Announcement> GetAllAnnouncements()
+        {
+            return announcements;
+        }
+
+        public Announcement GetAnnouncementById(int id)
+        {
+            return announcements.FirstOrDefault(x => x.ID == id);
+        }
+
+        public List<Announcement> GetAnnouncementsByPage(int p, int c)
+        {
+            return announcements.GetRange(p + c, c);
+        }
+
+        public void UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
+        {
+            Announcement announcement = announcements.First(x => x.ID == id);
+            announcement.Title = title;
+            announcement.Description = description;
+            announcement.IsImportant = isImportant;
+            announcement.IsSticky = isSticky;
+        }
+    }
+}

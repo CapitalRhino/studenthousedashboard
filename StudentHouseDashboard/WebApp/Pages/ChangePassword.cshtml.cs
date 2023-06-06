@@ -1,3 +1,4 @@
+using Data;
 using Logic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace WebApp.Pages
         }
         public void OnPost()
         {
-            UserManager userManager = new UserManager();
+            UserManager userManager = new UserManager(new UserRepository());
             User user = userManager.GetUserById(int.Parse(User.FindFirstValue("id")));
             if (NewPassword == null)
             {

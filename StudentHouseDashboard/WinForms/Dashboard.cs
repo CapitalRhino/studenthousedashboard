@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using Data;
+using Logic;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace WinForms
                 User currentUser = (User)lbUsers.SelectedItem;
                 if (MessageBox.Show($"Are you sure you want to delete\n{currentUser.Name}\n{currentUser.Role}", "Delete user", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    UserManager userManager = new UserManager();
+                    UserManager userManager = new UserManager(new UserRepository());
                     userManager.DisableUser(currentUser.ID);
                 }
             }
@@ -107,13 +108,13 @@ namespace WinForms
 
         private void RefreshLists()
         {
-            UserManager userManager = new UserManager();
+            UserManager userManager = new UserManager(new UserRepository());
             lbUsers.Items.Clear();
             foreach (User _user in userManager.GetAllUsers())
             {
                 lbUsers.Items.Add(_user);
             }
-            AnnouncementManager announcementManager = new AnnouncementManager();
+            AnnouncementManager announcementManager = new AnnouncementManager(new AnnouncementRepository());
             lbAnnouncements.Items.Clear();
             foreach (Announcement announcement in announcementManager.GetAllAnnouncements())
             {
@@ -145,7 +146,7 @@ namespace WinForms
                 if (MessageBox.Show($"Are you sure you want to delete\n{currentAnnouncement.Title}\nCreated at {currentAnnouncement.PublishDate.ToString("g")} by {currentAnnouncement.Author.Name}",
                     "Delete announcement", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    AnnouncementManager announcementManager = new AnnouncementManager();
+                    AnnouncementManager announcementManager = new AnnouncementManager(new AnnouncementRepository());
                     announcementManager.DeleteAnnouncement(currentAnnouncement.ID);
                 }
                 RefreshLists();

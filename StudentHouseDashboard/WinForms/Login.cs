@@ -1,3 +1,4 @@
+using Data;
 using Logic;
 using Models;
 
@@ -12,7 +13,7 @@ namespace WinForms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            UserManager userManager = new UserManager();
+            UserManager userManager = new UserManager(new UserRepository());
             User? user = userManager.AuthenticatedUser(tbUsername.Text, tbPassword.Text);
             if (user == null)
             {

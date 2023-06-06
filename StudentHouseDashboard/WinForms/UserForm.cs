@@ -1,4 +1,5 @@
-﻿using Logic;
+﻿using Data;
+using Logic;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace WinForms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            UserManager userManager = new UserManager();
+            UserManager userManager = new UserManager(new UserRepository());
             if (string.IsNullOrEmpty(tbUsername.Text) || string.IsNullOrEmpty(tbPassword.Text) || cbUserRole.SelectedIndex == -1)
             {
                 MessageBox.Show("Please enter data in all fields");

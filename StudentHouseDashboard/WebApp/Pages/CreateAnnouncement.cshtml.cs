@@ -1,3 +1,4 @@
+using Data;
 using Logic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,8 +18,8 @@ namespace WebApp.Pages
         }
         public IActionResult OnPost()
         {
-            AnnouncementManager announcementManager = new AnnouncementManager();
-            UserManager userManager = new UserManager();
+            AnnouncementManager announcementManager = new AnnouncementManager(new AnnouncementRepository());
+            UserManager userManager = new UserManager(new UserRepository());
             User user = userManager.GetUserById(int.Parse(User.FindFirstValue("id")));
             announcementManager.CreateAnnouncement(Announcement.Title, Announcement.Description, user, DateTime.Now, Announcement.IsImportant, Announcement.IsSticky);
             return RedirectToPage("Announcements");

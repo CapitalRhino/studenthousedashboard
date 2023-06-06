@@ -1,3 +1,5 @@
+using Data;
+using Logic;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace WebApp
@@ -15,6 +17,10 @@ namespace WebApp
                 options.LoginPath = new PathString("/Login");
                 options.AccessDeniedPath = new PathString("/Error/401");
             });
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+            builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
 
             var app = builder.Build();
 

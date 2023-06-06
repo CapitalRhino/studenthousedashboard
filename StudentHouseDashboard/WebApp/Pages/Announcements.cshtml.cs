@@ -11,21 +11,33 @@ namespace WebApp.Pages
     public class AnnouncementsModel : PageModel
     {
         public AnnouncementManager AnnouncementManager { get; set; }
-        public void OnGet(int? p, int? c)
+        private readonly IAnnouncementRepository _announcementRepository;
+
+        public AnnouncementsModel(IAnnouncementRepository announcementRepository)
         {
-            AnnouncementManager = new AnnouncementManager();
-            if (p == null || p < 1)
+            _announcementRepository = announcementRepository;
+        }
+
+        public void OnGet(int? p, int? c) // page, count
+        {
+            AnnouncementManager = new AnnouncementManager(_announcementRepository);
+            if (!(p < 0))
             {
                 p = 1;
             }
-            if (c == null || c < 1)
+            if (!(c < 1))
             {
                 c = 10;
             }
-            ViewData.Add("announcements", AnnouncementManager.GetAnnouncementsByPage(p - 1, c));
+            ViewData.Add("announcements", AnnouncementManager.GetAnnouncementsByPage(p.Value - 1, c.Value));
             ViewData.Add("page", p);
             ViewData.Add("count", c);
-            ViewData.Add("allCount", AnnouncementManager.GetAllAnnouncements().Count());
+            ViewData.Add("allCount", AnnouncementManager.GetAllAnnouncements().Count);
+        }
+        public void OnGetSearch(string s) // search
+        {
+            AnnouncementManager = new AnnouncementManager(_announcementRepository);
+            ViewData.Add("announcements", AnnouncementManager.SearchAnnouncements(s));
         }
     }
 }

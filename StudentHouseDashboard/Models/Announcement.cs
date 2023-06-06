@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Models
 {
-    public class Announcement : GenericMessage, IVotable
+    public class Announcement : GenericMessage
     {
         public Announcement(int id, User author, string description, string title, DateTime publishDate, bool isImportant, bool isSticky) : base(id, author, description, title, publishDate)
         {
@@ -30,16 +30,6 @@ namespace Models
         public bool IsSticky
         {
             get; set;
-        }
-
-        public void DownVote()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpVote()
-        {
-            throw new NotImplementedException();
         }
         public override string ToString()
         {

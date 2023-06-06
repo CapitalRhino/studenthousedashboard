@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Logic;
 using Models;
+using Data;
 
 namespace WebApp.Pages
 {
@@ -14,8 +15,8 @@ namespace WebApp.Pages
         }
         public void OnPost()
         {
-            var userManager = new UserManager();
-            if (userManager.CreateUser(MyUser.Name, BCrypt.Net.BCrypt.HashPassword(MyUser.Password), MyUser.Role))
+            var userManager = new UserManager(new UserRepository());
+            if (userManager.CreateUser(MyUser.Name, BCrypt.Net.BCrypt.HashPassword(MyUser.Password), MyUser.Role) != null)
             {
                 ViewData["confirm"] = $"Successfully registered {MyUser.Name}!";
             }

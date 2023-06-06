@@ -1,10 +1,12 @@
 using System.ComponentModel.Design;
 using System.Data.SqlClient;
 using Models;
+using Logic;
+using Logic.Exceptions;
 
 namespace Data;
 
-public class CommentRepository
+public class CommentRepository : ICommentRepository
 {
     public CommentRepository()
     {
@@ -100,10 +102,14 @@ public class CommentRepository
             cmd.Parameters.AddWithValue("@desc", description);
             cmd.Parameters.AddWithValue("@id", id);
             int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Comment not updated");
+            }
         }
     }
 
-    private Comment CreateComment(User author, string description, string title, DateTime publishDate)
+    public Comment CreateComment(User author, string description, string title, DateTime publishDate)
     {
         using (SqlConnection connection = SqlConnectionHelper.CreateConnection())
         {
@@ -128,6 +134,10 @@ public class CommentRepository
             cmd.Parameters.AddWithValue("@announcementID", announcementId);
             cmd.Parameters.AddWithValue("@commentID", comment.ID);
             int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Announcement comment not created");
+            }
         }
     }
     public void CreateResponseOnComment(User author, string description, string title, DateTime publishDate, int commentId)
@@ -140,10 +150,14 @@ public class CommentRepository
             cmd.Parameters.AddWithValue("@commentID", commentId);
             cmd.Parameters.AddWithValue("@responseID", response.ID);
             int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Comment response not created");
+            }
         }
     }
 
-    private void DeleteComment(int id)
+    public void DeleteComment(int id)
     {
         using (SqlConnection connection = SqlConnectionHelper.CreateConnection())
         {
@@ -152,6 +166,10 @@ public class CommentRepository
             SqlCommand cmd = new SqlCommand(sql, connection);
             cmd.Parameters.AddWithValue("@id", id);
             int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Comment not deleted");
+            }
         }
     }
 
@@ -165,6 +183,10 @@ public class CommentRepository
             cmd.Parameters.AddWithValue("@commentId", commentId);
             cmd.Parameters.AddWithValue("@announcementId", announcementId);
             int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Announcement comment not deleted");
+            }
         }
         DeleteComment(commentId);
     }
@@ -178,6 +200,10 @@ public class CommentRepository
             cmd.Parameters.AddWithValue("@commentId", commentId);
             cmd.Parameters.AddWithValue("@responseId", responseId);
             int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Announcement not created");
+            }
         }
         DeleteComment(commentId);
     }

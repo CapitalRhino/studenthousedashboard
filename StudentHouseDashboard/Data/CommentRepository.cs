@@ -1,8 +1,7 @@
-using System.ComponentModel.Design;
-using System.Data.SqlClient;
-using Models;
 using Logic;
 using Logic.Exceptions;
+using Models;
+using System.Data.SqlClient;
 
 namespace Data;
 

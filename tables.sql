@@ -15,6 +15,8 @@ CREATE TABLE Users (
 )
 GO
 
+-- Used only in previous versions for a contact form
+-- no longer needed
 CREATE TABLE ContactForm (
 	ID INT PRIMARY KEY IDENTITY NOT NULL,
 	[Name] NVARCHAR(255) NOT NULL,

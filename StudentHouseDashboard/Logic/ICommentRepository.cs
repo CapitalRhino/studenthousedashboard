@@ -1,5 +1,3 @@
-using System.ComponentModel.Design;
-using System.Data.SqlClient;
 using Models;
 
 namespace Logic;

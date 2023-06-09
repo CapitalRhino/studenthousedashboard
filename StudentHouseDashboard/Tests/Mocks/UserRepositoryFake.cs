@@ -1,10 +1,5 @@
-﻿using Models;
-using Logic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logic;
+using Models;
 
 namespace Tests.Mocks
 {
@@ -12,7 +7,7 @@ namespace Tests.Mocks
     {
         private List<User> users;
         private int currentId;
-        public UserRepositoryFake() 
+        public UserRepositoryFake()
         {
             users = new List<User>();
             currentId = 1;

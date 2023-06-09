@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -18,7 +14,7 @@ namespace Models
         }
         protected GenericMessage()
         {
-            
+
         }
         public int ID
         {
@@ -27,16 +23,16 @@ namespace Models
 
         public User Author
         {
-            get;set;
+            get; set;
         }
         public string Description
         {
-            get;set;
+            get; set;
         }
         [StringLength(255)]
         public string Title
         {
-            get;set;
+            get; set;
         }
         public DateTime PublishDate
         {

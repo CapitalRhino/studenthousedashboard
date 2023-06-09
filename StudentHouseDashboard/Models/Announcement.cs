@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Models
+﻿namespace Models
 {
     public class Announcement : GenericMessage
     {
@@ -15,16 +10,16 @@ namespace Models
 
         public Announcement()
         {
-            
+
         }
         public List<Comment> Comments
         {
-            get;set;
+            get; set;
         }
 
         public bool IsImportant
         {
-            get;set;
+            get; set;
         }
 
         public bool IsSticky

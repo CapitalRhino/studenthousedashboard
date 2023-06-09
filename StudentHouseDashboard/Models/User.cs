@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -25,13 +20,17 @@ namespace Models
         {
             get; set;
         }
+
+        [Required]
         [StringLength(255)]
         public string Name
         {
             get; set;
         }
 
+        [Required]
         [DataType(DataType.Password)]
+        [StringLength(int.MaxValue, MinimumLength = 4)]
         public string Password
         {
             get; set;

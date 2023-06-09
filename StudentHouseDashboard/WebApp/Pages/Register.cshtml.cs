@@ -1,8 +1,8 @@
+using Data;
+using Logic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Logic;
 using Models;
-using Data;
 
 namespace WebApp.Pages
 {
@@ -16,9 +16,21 @@ namespace WebApp.Pages
         public void OnPost()
         {
             var userManager = new UserManager(new UserRepository());
-            if (userManager.CreateUser(MyUser.Name, BCrypt.Net.BCrypt.HashPassword(MyUser.Password), MyUser.Role) != null)
+            User? result = null;
+            try
             {
-                ViewData["confirm"] = $"Successfully registered {MyUser.Name}!";
+                result = userManager.CreateUser(MyUser.Name, BCrypt.Net.BCrypt.HashPassword(MyUser.Password), MyUser.Role);
+            }
+            catch (ArgumentException)
+            {
+                ViewData["confirm"] = "An error has occurred. Try a different username.";
+            }
+            finally
+            {
+                if (result != null)
+                {
+                    ViewData["confirm"] = $"Successfully registered {MyUser.Name}!";
+                }
             }
         }
     }

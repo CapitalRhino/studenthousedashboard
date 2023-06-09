@@ -1,12 +1,8 @@
 ﻿using Logic;
 using Logic.Exceptions;
 using Models;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Data
 {
@@ -14,7 +10,7 @@ namespace Data
     {
         public ComplaintRepository()
         {
-                
+
         }
         public List<Complaint> GetAllComplaints()
         {
@@ -86,7 +82,7 @@ namespace Data
             }
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
-                
+
                 SqlCommand sqlCommand = new SqlCommand(sql, conn);
                 sqlCommand.Parameters.AddWithValue("@start", p * c);
                 sqlCommand.Parameters.AddWithValue("@count", c);

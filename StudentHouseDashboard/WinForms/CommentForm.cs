@@ -1,15 +1,6 @@
 ﻿using Data;
 using Logic;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WinForms
 {
@@ -80,11 +71,11 @@ namespace WinForms
             {
                 switch (responseType)
                 {
-                    case "announcement": 
-                        commentManager.CreateCommentOnAnnouncement(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId); 
+                    case "announcement":
+                        commentManager.CreateCommentOnAnnouncement(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
                         break;
-                    case "comment": 
-                        commentManager.CreateResponseOnComment(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId); 
+                    case "comment":
+                        commentManager.CreateResponseOnComment(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
                         break;
                     case "complaint":
                         commentManager.CreateCommentOnComplaint(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
@@ -111,7 +102,7 @@ namespace WinForms
                 form.ShowDialog();
                 RefreshComments();
             }
-            
+
         }
 
         private void btnEditComment_Click(object sender, EventArgs e)

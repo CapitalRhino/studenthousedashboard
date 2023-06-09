@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SqlClient;
+﻿using Logic;
 using Models;
-using System.Data;
-using System.Xml.Linq;
-using Logic;
+using System.Data.SqlClient;
 
 namespace Data
 {
@@ -115,7 +108,7 @@ namespace Data
             }
         }
 
-        public User GetUserByName(string userName)
+        public User? GetUserByName(string userName)
         {
             using (SqlConnection conn = SqlConnectionHelper.CreateConnection())
             {
@@ -124,8 +117,14 @@ namespace Data
                 cmd.Parameters.AddWithValue("@userName", userName);
                 var reader = cmd.ExecuteReader();
 
-                return new User(Convert.ToInt32(reader["ID"]), reader["Name"].ToString(),
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    return new User(Convert.ToInt32(reader["ID"]), reader["Name"].ToString(),
                         reader["Password"].ToString(), (UserRole)reader["Role"]);
+                }
+                else { return null; }
+                
             }
         }
     }

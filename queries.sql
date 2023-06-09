@@ -1,6 +1,7 @@
 USE dbi509645
 GO
 
+-- User roles
 INSERT INTO UserRole ([Role])
 VALUES
 	('TENANT'),
@@ -8,6 +9,7 @@ VALUES
 	('ADMIN')
 GO
 
+-- Default users
 INSERT INTO Users ([Name], [Password], [Role])
 VALUES
 	('admin', 'admin', 2),
@@ -15,6 +17,7 @@ VALUES
 	('room1', 'room1', 0)
 GO
 
+-- Complaint status
 INSERT INTO ComplaintStatus ([Status])
 VALUES
 	('FILED'),
@@ -23,6 +26,7 @@ VALUES
 	('ARCHIVED')
 GO
 
+-- Complaint severity
 INSERT INTO ComplaintSeverity ([Severity])
 VALUES
 	('LOW'),
@@ -30,5 +34,3 @@ VALUES
 	('HIGH'),
 	('URGENT')
 GO
-
-SELECT * FROM Users u JOIN UserRole r ON u.[Role] = r.ID

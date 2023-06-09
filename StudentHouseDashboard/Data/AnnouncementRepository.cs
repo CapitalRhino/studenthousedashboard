@@ -1,13 +1,8 @@
-﻿using Models;
-using Logic;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Logic;
 using Logic.Exceptions;
-using System.Reflection;
+using Models;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace Data
 {
@@ -50,13 +45,13 @@ namespace Data
                 cmd.Parameters.AddWithValue("id", id);
                 var reader = cmd.ExecuteReader();
                 reader.Read();
-                    Announcement announcement = new Announcement(Convert.ToInt32(reader["ID"]),
-                        userRepository.GetUserById(Convert.ToInt32(reader["Author"])),
-                        reader["Description"].ToString(), reader["Title"].ToString(),
-                        (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
-                        (bool)reader["IsSticky"]);
-                    CommentRepository commentRepository = new CommentRepository();
-                    announcement.Comments = commentRepository.GetAllCommentsOnAnnouncement(announcement.ID);
+                Announcement announcement = new Announcement(Convert.ToInt32(reader["ID"]),
+                    userRepository.GetUserById(Convert.ToInt32(reader["Author"])),
+                    reader["Description"].ToString(), reader["Title"].ToString(),
+                    (DateTime)reader["PublishDate"], (bool)reader["IsImportant"],
+                    (bool)reader["IsSticky"]);
+                CommentRepository commentRepository = new CommentRepository();
+                announcement.Comments = commentRepository.GetAllCommentsOnAnnouncement(announcement.ID);
                 conn.Close();
                 return announcement;
             }

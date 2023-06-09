@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Models
+﻿namespace Models
 {
     public class Complaint : GenericMessage
     {
         public Complaint()
         {
-                
+
         }
         public Complaint(int id, User author, string description, string title, DateTime publishDate, ComplaintStatus status, ComplaintSeverity severity) : base(id, author, description, title, publishDate)
         {
@@ -19,17 +14,17 @@ namespace Models
 
         public ComplaintStatus Status
         {
-            get;set;
+            get; set;
         }
 
         public ComplaintSeverity Severity
         {
-            get;set;
+            get; set;
         }
 
         public List<Comment> Responses
         {
-            get;set;
+            get; set;
         }
         public override string ToString()
         {

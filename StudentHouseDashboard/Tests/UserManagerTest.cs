@@ -1,4 +1,3 @@
-using BCrypt.Net;
 using Logic;
 using Models;
 using Tests.Mocks;
@@ -26,7 +25,7 @@ namespace Tests
             // Assert
             Assert.IsNull(result);
         }
-        
+
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void AuthenticatedUserNullPasswordTest()
@@ -133,7 +132,7 @@ namespace Tests
             // Assert
             // ArgumentException expected
         }
-        
+
         [TestMethod]
         public void DisableUserTest()
         {
@@ -148,6 +147,6 @@ namespace Tests
             Assert.AreEqual(user.Name, $"Deleted User {user.ID}");
             Assert.AreEqual(user.Password, "0");
         }
-        
+
     }
 }

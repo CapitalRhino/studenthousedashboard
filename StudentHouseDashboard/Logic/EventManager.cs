@@ -1,9 +1,4 @@
 ﻿using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logic
 {
@@ -14,7 +9,7 @@ namespace Logic
         {
             this.eventRepository = eventRepository;
         }
-        public List<Event> GetAllEvents() 
+        public List<Event> GetAllEvents()
         {
             return eventRepository.GetAllEvents();
         }

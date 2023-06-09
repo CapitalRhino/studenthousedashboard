@@ -24,7 +24,7 @@ namespace WebApp.Pages
             if (id != null)
             {
                 Announcement announcement = announcementManager.GetAnnouncementById(id);
-                if (announcement.Author.ID == int.Parse(User.FindFirstValue("id")) || User.IsInRole("ADMIN")    )
+                if (announcement.Author.ID == int.Parse(User.FindFirstValue("id")) || User.IsInRole("ADMIN"))
                 {
                     ViewData["announcement"] = announcement;
                 }

@@ -26,7 +26,7 @@ namespace WebApp.Pages
             if (id != null)
             {
                 Event @event = eventManager.GetEventById(id.Value);
-                if (@event.Author.ID == int.Parse(User.FindFirstValue("id")) || User.IsInRole("ADMIN")    )
+                if (@event.Author.ID == int.Parse(User.FindFirstValue("id")) || User.IsInRole("ADMIN"))
                 {
                     ViewData["event"] = @event;
                 }
@@ -46,7 +46,7 @@ namespace WebApp.Pages
                 EventManager eventManager = new EventManager(_eventRepository);
                 eventManager.UpdateEvent(Event.ID, Event.Title, Event.Description, Event.StartDate, Event.EndDate);
             }
-            
+
             return RedirectToPage("Events");
         }
     }

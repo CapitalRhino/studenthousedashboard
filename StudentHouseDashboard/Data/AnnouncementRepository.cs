@@ -156,7 +156,7 @@ namespace Data
             UserRepository userRepository = new UserRepository();
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT * FROM Announcements ");
-            string[] searchStrings = query.Trim().Split(' ');
+            string[] searchStrings = query.Split(' ');
             for (int i = 0; i < searchStrings.Length; i++)
             {
                 if (i == 0)

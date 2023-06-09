@@ -28,7 +28,7 @@ namespace Tests
         }
         
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void AuthenticatedUserNullPasswordTest()
         {
             // Arrange

@@ -1,0 +1,76 @@
+﻿@page
+@using Models;
+@using System.Security.Claims;
+@model WebApp.Pages.ComplaintsModel
+@{
+    ViewData["Title"] = "Complaints";
+    List<Complaint> complaints = ((List<Complaint>)ViewData["complaints"]).ToList();
+    int currentPage = 0;
+    if (ViewData["page"] != null)
+    {
+        currentPage = Convert.ToInt32(ViewData["page"]);
+    }
+}
+
+<a href="./CreateComplaint" class="btn btn-primary">Create new complaint</a>
+
+<div class="mb-3 mt-3">
+    @foreach (Complaint complaint in complaints)
+    {
+        <div class="card" style="display:inline-flex; width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title" @if (complaint.Severity == ComplaintSeverity.URGENT)
+                {
+                    @: style="color: red;"
+                }
+                else if (complaint.Severity == ComplaintSeverity.HIGH)
+                {
+                    @: style="color: orange;"
+                }
+                @if (complaint.Severity == ComplaintSeverity.LOW)
+                {
+                    @: style="color: darkgreen;"
+                }>@complaint.Title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@complaint.Status</h6>
+                <h6 class="card-subtitle mb-2 text-muted">@complaint.Author.Name</h6>
+                <p class="card-text">@complaint.Description.PadRight(100).Substring(0,100).Trim()</p>
+                <a href="./complaint?id=@complaint.ID" class="btn btn-primary">More details</a>
+            </div>
+        </div>
+    }
+</div>
+
+@if (ViewData["page"] != null)
+{
+ <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @if (currentPage <= 1)
+        {
+            @: <li class="page-item disabled">
+            @: <a class="page-link" tabindex="-1">Previous</a>
+            @: </li>
+        }
+        else  
+        {
+            @: <li class="page-item">
+            @: <a class="page-link" href="./complaints?p=@(currentPage - 1)" tabindex="-1">Previous</a>
+            @: </li>
+            @: <li class="page-item"><a class="page-link" href="./complaints?p=@(currentPage - 1)">@(currentPage - 1)</a></li>
+        }
+        <li class="page-item"><a class="page-link">@currentPage</a>
+        @if (complaints.Count == 0 || complaints.Count < Convert.ToInt32(ViewData["count"]))
+        {
+            @: <li class="page-item disabled">
+            @: <a class="page-link">Next</a>
+            @: </li>
+        }
+        else  
+        {
+            @: <li class="page-item"><a class="page-link" href="./complaints?p=@(currentPage + 1)">@(currentPage + 1)</a></li>
+            @: <li class="page-item">
+            @: <a class="page-link" href="./complaints?p=@(currentPage + 1)">Next</a>
+            @: </li>
+        }
+    </ul>
+</nav>   
+}

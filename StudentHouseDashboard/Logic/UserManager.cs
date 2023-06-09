@@ -33,12 +33,12 @@ namespace Logic
         }
         public User? AuthenticatedUser(string name, string password)
         {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Name or password should not be empty!");
+            }
             List<User> users = userRepository.GetAllUsers();
             User? user = users.Find(x => x.Name == name);
-            if (name == null || password == null)
-            {
-                throw new ArgumentNullException();
-            }
             if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 return user;
@@ -57,12 +57,16 @@ namespace Logic
             }
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
             {
-                throw new ArgumentException("Name or password should not be empty");
+                throw new ArgumentException("Name or password should not be empty!");
             }
             return userRepository.CreateUser(name, password, role);
         }
         public void UpdateUser(int id, string name, string password, UserRole role)
         {
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Name or password should not be empty!");
+            }
             userRepository.UpdateUser(id, name, password, role);
         }
         public void DisableUser(int id)

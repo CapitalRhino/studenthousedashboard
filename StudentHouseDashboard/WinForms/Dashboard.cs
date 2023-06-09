@@ -31,6 +31,7 @@ namespace WinForms
                 btnNewAnnouncement.Enabled = false;
                 btnDeleteAnnouncement.Enabled = false;
                 btnEditAnnouncement.Enabled = true;
+                btnEditComplaint.Enabled = false;
             }
             else if (user.Role == UserRole.ADMIN)
             {
@@ -40,6 +41,7 @@ namespace WinForms
                 btnNewAnnouncement.Enabled = true;
                 btnDeleteAnnouncement.Enabled = true;
                 btnEditAnnouncement.Enabled = true;
+                btnEditComplaint.Enabled = true;
             }
             else
             {
@@ -49,6 +51,7 @@ namespace WinForms
                 btnNewAnnouncement.Enabled = false;
                 btnDeleteAnnouncement.Enabled = false;
                 btnEditAnnouncement.Enabled = false;
+                btnEditComplaint.Enabled = false;
             }
             RefreshLists();
         }
@@ -120,6 +123,12 @@ namespace WinForms
             {
                 lbAnnouncements.Items.Add(announcement);
             }
+            ComplaintManager complaintManager = new ComplaintManager(new ComplaintRepository());
+            lbComplaints.Items.Clear();
+            foreach (Complaint complaint in complaintManager.GetAllComplaints())
+            {
+                lbComplaints.Items.Add(complaint);
+            }
         }
 
         private void Dashboard_FormClosed(object sender, FormClosedEventArgs e)
@@ -177,6 +186,53 @@ namespace WinForms
             {
                 AnnouncementForm announcementForm = new AnnouncementForm((Announcement)lbAnnouncements.SelectedItem, true, user);
                 announcementForm.ShowDialog();
+                RefreshLists();
+            }
+        }
+
+        private void btnArchiveComplaint_Click(object sender, EventArgs e)
+        {
+            if (lbComplaints.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                Complaint currentComplaint = (Complaint)lbComplaints.SelectedItem;
+                if (MessageBox.Show($"Are you sure you want to archive\n{currentComplaint.Title}\nCreated at {currentComplaint.PublishDate.ToString("g")} by {currentComplaint.Author.Name}",
+                    "Archive complaint", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    AnnouncementManager announcementManager = new AnnouncementManager(new AnnouncementRepository());
+                    announcementManager.DeleteAnnouncement(currentComplaint.ID);
+                }
+                RefreshLists();
+            }
+        }
+
+        private void btnEditComplaint_Click(object sender, EventArgs e)
+        {
+            if (lbComplaints.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                ComplaintForm complaintForm = new ComplaintForm((Complaint)lbComplaints.SelectedItem, false, user);
+                complaintForm.ShowDialog();
+                RefreshLists();
+            }
+        }
+
+        private void btnViewComplaint_Click(object sender, EventArgs e)
+        {
+            if (lbComplaints.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                ComplaintForm complaintForm = new ComplaintForm((Complaint)lbComplaints.SelectedItem, true, user);
+                complaintForm.ShowDialog();
                 RefreshLists();
             }
         }

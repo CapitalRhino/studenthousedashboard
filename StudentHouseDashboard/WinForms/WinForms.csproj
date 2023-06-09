@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="ComplaintForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="AnnouncementForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -207,4 +207,37 @@ public class CommentRepository : ICommentRepository
         }
         DeleteComment(commentId);
     }
+
+    public void CreateCommentOnComplaint(User author, string description, string title, DateTime publishDate, int complaintId)
+    {
+        
+    }
+
+    public List<Comment> GetAllCommentsOnComplaint(int complaintId)
+    {
+        List<Comment> comments = new List<Comment>();
+        using (SqlConnection connection = SqlConnectionHelper.CreateConnection())
+        {
+            string sql = "SELECT c.ID, c.Author, c.Description, c.Title, c.PublishDate, " +
+                         "u.ID UserID, u.Name UserName, u.Password, u.Role FROM ComplaintsComments cc " +
+                         "INNER JOIN Comments c ON c.ID = cc.CommentID " +
+                         "INNER JOIN Users u ON u.ID = c.Author " +
+                         "WHERE cc.ComplaintID = @complaintID";
+            SqlCommand sqlCommand = new SqlCommand(sql, connection);
+            sqlCommand.Parameters.AddWithValue("@complaintID", complaintId);
+            var reader = sqlCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                Comment newComment = new Comment((int)reader["ID"],
+                    new User((int)reader["UserID"], reader["UserName"].ToString(),
+                        reader["Password"].ToString(), (UserRole)reader["Role"]),
+                    reader["Description"].ToString(), reader["Title"].ToString(),
+                    (DateTime)reader["PublishDate"]);
+                newComment.Responses = GetAllCommentResponses(newComment.ID);
+                comments.Add(newComment);
+            }
+        }
+
+        return comments;
+    }
 }

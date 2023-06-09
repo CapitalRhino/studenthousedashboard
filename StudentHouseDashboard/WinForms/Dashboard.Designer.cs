@@ -38,17 +38,26 @@
             tpUsers = new TabPage();
             panelUserFunctions = new Panel();
             tpAnnouncements = new TabPage();
-            lbAnnouncements = new ListBox();
-            panel1 = new Panel();
+            panelAnnouncementsFunctions = new Panel();
             btnNewAnnouncement = new Button();
             btnDeleteAnnouncement = new Button();
             btnViewAnnouncement = new Button();
             btnEditAnnouncement = new Button();
+            lbAnnouncements = new ListBox();
+            tpComplaints = new TabPage();
+            tpEvents = new TabPage();
+            lbComplaints = new ListBox();
+            panelComplaintFunctions = new Panel();
+            btnArchiveComplaint = new Button();
+            btnViewComplaint = new Button();
+            btnEditComplaint = new Button();
             tabControl1.SuspendLayout();
             tpUsers.SuspendLayout();
             panelUserFunctions.SuspendLayout();
             tpAnnouncements.SuspendLayout();
-            panel1.SuspendLayout();
+            panelAnnouncementsFunctions.SuspendLayout();
+            tpComplaints.SuspendLayout();
+            panelComplaintFunctions.SuspendLayout();
             SuspendLayout();
             // 
             // lblUserStatus
@@ -116,6 +125,8 @@
             // 
             tabControl1.Controls.Add(tpUsers);
             tabControl1.Controls.Add(tpAnnouncements);
+            tabControl1.Controls.Add(tpComplaints);
+            tabControl1.Controls.Add(tpEvents);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -149,7 +160,7 @@
             // 
             // tpAnnouncements
             // 
-            tpAnnouncements.Controls.Add(panel1);
+            tpAnnouncements.Controls.Add(panelAnnouncementsFunctions);
             tpAnnouncements.Controls.Add(lbAnnouncements);
             tpAnnouncements.Location = new Point(4, 24);
             tpAnnouncements.Name = "tpAnnouncements";
@@ -159,27 +170,17 @@
             tpAnnouncements.Text = "Announcements";
             tpAnnouncements.UseVisualStyleBackColor = true;
             // 
-            // lbAnnouncements
+            // panelAnnouncementsFunctions
             // 
-            lbAnnouncements.Dock = DockStyle.Fill;
-            lbAnnouncements.FormattingEnabled = true;
-            lbAnnouncements.ItemHeight = 15;
-            lbAnnouncements.Location = new Point(3, 3);
-            lbAnnouncements.Name = "lbAnnouncements";
-            lbAnnouncements.Size = new Size(717, 334);
-            lbAnnouncements.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(btnNewAnnouncement);
-            panel1.Controls.Add(btnDeleteAnnouncement);
-            panel1.Controls.Add(btnViewAnnouncement);
-            panel1.Controls.Add(btnEditAnnouncement);
-            panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(3, 298);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(717, 39);
-            panel1.TabIndex = 7;
+            panelAnnouncementsFunctions.Controls.Add(btnNewAnnouncement);
+            panelAnnouncementsFunctions.Controls.Add(btnDeleteAnnouncement);
+            panelAnnouncementsFunctions.Controls.Add(btnViewAnnouncement);
+            panelAnnouncementsFunctions.Controls.Add(btnEditAnnouncement);
+            panelAnnouncementsFunctions.Dock = DockStyle.Bottom;
+            panelAnnouncementsFunctions.Location = new Point(3, 298);
+            panelAnnouncementsFunctions.Name = "panelAnnouncementsFunctions";
+            panelAnnouncementsFunctions.Size = new Size(717, 39);
+            panelAnnouncementsFunctions.TabIndex = 7;
             // 
             // btnNewAnnouncement
             // 
@@ -221,6 +222,87 @@
             btnEditAnnouncement.UseVisualStyleBackColor = true;
             btnEditAnnouncement.Click += btnEditAnnouncement_Click;
             // 
+            // lbAnnouncements
+            // 
+            lbAnnouncements.Dock = DockStyle.Fill;
+            lbAnnouncements.FormattingEnabled = true;
+            lbAnnouncements.ItemHeight = 15;
+            lbAnnouncements.Location = new Point(3, 3);
+            lbAnnouncements.Name = "lbAnnouncements";
+            lbAnnouncements.Size = new Size(717, 334);
+            lbAnnouncements.TabIndex = 0;
+            // 
+            // tpComplaints
+            // 
+            tpComplaints.Controls.Add(panelComplaintFunctions);
+            tpComplaints.Controls.Add(lbComplaints);
+            tpComplaints.Location = new Point(4, 24);
+            tpComplaints.Name = "tpComplaints";
+            tpComplaints.Size = new Size(723, 340);
+            tpComplaints.TabIndex = 2;
+            tpComplaints.Text = "Complaints";
+            tpComplaints.UseVisualStyleBackColor = true;
+            // 
+            // tpEvents
+            // 
+            tpEvents.Location = new Point(4, 24);
+            tpEvents.Name = "tpEvents";
+            tpEvents.Size = new Size(723, 340);
+            tpEvents.TabIndex = 3;
+            tpEvents.Text = "Events";
+            tpEvents.UseVisualStyleBackColor = true;
+            // 
+            // lbComplaints
+            // 
+            lbComplaints.Dock = DockStyle.Top;
+            lbComplaints.FormattingEnabled = true;
+            lbComplaints.ItemHeight = 15;
+            lbComplaints.Location = new Point(0, 0);
+            lbComplaints.Name = "lbComplaints";
+            lbComplaints.Size = new Size(723, 289);
+            lbComplaints.TabIndex = 0;
+            // 
+            // panelComplaintFunctions
+            // 
+            panelComplaintFunctions.Controls.Add(btnArchiveComplaint);
+            panelComplaintFunctions.Controls.Add(btnViewComplaint);
+            panelComplaintFunctions.Controls.Add(btnEditComplaint);
+            panelComplaintFunctions.Dock = DockStyle.Bottom;
+            panelComplaintFunctions.Location = new Point(0, 285);
+            panelComplaintFunctions.Name = "panelComplaintFunctions";
+            panelComplaintFunctions.Size = new Size(723, 55);
+            panelComplaintFunctions.TabIndex = 1;
+            // 
+            // btnArchiveComplaint
+            // 
+            btnArchiveComplaint.Location = new Point(8, 10);
+            btnArchiveComplaint.Name = "btnArchiveComplaint";
+            btnArchiveComplaint.Size = new Size(75, 23);
+            btnArchiveComplaint.TabIndex = 7;
+            btnArchiveComplaint.Text = "Archive";
+            btnArchiveComplaint.UseVisualStyleBackColor = true;
+            btnArchiveComplaint.Click += btnArchiveComplaint_Click;
+            // 
+            // btnViewComplaint
+            // 
+            btnViewComplaint.Location = new Point(170, 10);
+            btnViewComplaint.Name = "btnViewComplaint";
+            btnViewComplaint.Size = new Size(75, 23);
+            btnViewComplaint.TabIndex = 9;
+            btnViewComplaint.Text = "View";
+            btnViewComplaint.UseVisualStyleBackColor = true;
+            btnViewComplaint.Click += btnViewComplaint_Click;
+            // 
+            // btnEditComplaint
+            // 
+            btnEditComplaint.Location = new Point(89, 10);
+            btnEditComplaint.Name = "btnEditComplaint";
+            btnEditComplaint.Size = new Size(75, 23);
+            btnEditComplaint.TabIndex = 8;
+            btnEditComplaint.Text = "Edit";
+            btnEditComplaint.UseVisualStyleBackColor = true;
+            btnEditComplaint.Click += btnEditComplaint_Click;
+            // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -235,7 +317,9 @@
             tpUsers.ResumeLayout(false);
             panelUserFunctions.ResumeLayout(false);
             tpAnnouncements.ResumeLayout(false);
-            panel1.ResumeLayout(false);
+            panelAnnouncementsFunctions.ResumeLayout(false);
+            tpComplaints.ResumeLayout(false);
+            panelComplaintFunctions.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -252,11 +336,18 @@
         private TabPage tpUsers;
         private TabPage tpAnnouncements;
         private Panel panelUserFunctions;
-        private Panel panel1;
+        private Panel panelAnnouncementsFunctions;
         private Button btnNewAnnouncement;
         private Button btnDeleteAnnouncement;
         private Button btnViewAnnouncement;
         private Button btnEditAnnouncement;
         private ListBox lbAnnouncements;
+        private TabPage tpComplaints;
+        private Panel panelComplaintFunctions;
+        private ListBox lbComplaints;
+        private TabPage tpEvents;
+        private Button btnArchiveComplaint;
+        private Button btnViewComplaint;
+        private Button btnEditComplaint;
     }
 }

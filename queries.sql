@@ -10,9 +10,25 @@ GO
 
 INSERT INTO Users ([Name], [Password], [Role])
 VALUES
-	('Admin', '1234', 2),
-	('Manager', '1234', 1),
-	('Room1', '1234', 0)
+	('admin', 'admin', 2),
+	('manager', 'manager', 1),
+	('room1', 'room1', 0)
+GO
+
+INSERT INTO ComplaintStatus ([Status])
+VALUES
+	('FILED'),
+	('UNDER_REVIEW'),
+	('SOLVED'),
+	('ARCHIVED')
+GO
+
+INSERT INTO ComplaintSeverity ([Severity])
+VALUES
+	('LOW'),
+	('NORMAL'),
+	('HIGH'),
+	('URGENT')
 GO
 
 SELECT * FROM Users u JOIN UserRole r ON u.[Role] = r.ID

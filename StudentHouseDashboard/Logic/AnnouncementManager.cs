@@ -53,13 +53,16 @@ namespace Logic
                 DateTime date;
                 if (DateTime.TryParse(match.Groups[0].Value, out date))
                 {
-                    query = Regex.Replace(query, "date:[0-9]{4}-[0-9]{2}-[0-9]{2}", "");
+                    query = Regex.Replace(query, "date:[0-9]{4}-[0-9]{2}-[0-9]{2}", "").Trim();
                     if (string.IsNullOrEmpty(query))
                     {
+                        // search only by date
                         return announcementRepository.GetAllAnnouncements().Where(x => x.PublishDate.Date == date.Date).ToList();
                     }
+                    // search by date and keywords
                     else return announcementRepository.SearchAnnouncement(query).Where(x => x.PublishDate.Date == date.Date).ToList();
                 }
+                // search by keywords
                 else return announcementRepository.SearchAnnouncement(query);
             }
         }

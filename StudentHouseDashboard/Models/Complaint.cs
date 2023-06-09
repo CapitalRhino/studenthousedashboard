@@ -7,6 +7,10 @@ namespace Models
 {
     public class Complaint : GenericMessage
     {
+        public Complaint()
+        {
+                
+        }
         public Complaint(int id, User author, string description, string title, DateTime publishDate, ComplaintStatus status, ComplaintSeverity severity) : base(id, author, description, title, publishDate)
         {
             Status = status;
@@ -26,6 +30,10 @@ namespace Models
         public List<Comment> Responses
         {
             get;set;
+        }
+        public override string ToString()
+        {
+            return $"({PublishDate.ToString("d")} - {Author.Name}) {Title}";
         }
     }
 }

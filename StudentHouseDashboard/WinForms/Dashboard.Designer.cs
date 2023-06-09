@@ -52,6 +52,12 @@
             lbComplaints = new ListBox();
             tpEvents = new TabPage();
             btnLogout = new Button();
+            panel1 = new Panel();
+            btnNewEvent = new Button();
+            btnDeleteEvent = new Button();
+            btnViewEvent = new Button();
+            btnEditEvent = new Button();
+            lbEvents = new ListBox();
             tabControl1.SuspendLayout();
             tpUsers.SuspendLayout();
             panelUserFunctions.SuspendLayout();
@@ -59,6 +65,8 @@
             panelAnnouncementsFunctions.SuspendLayout();
             tpComplaints.SuspendLayout();
             panelComplaintFunctions.SuspendLayout();
+            tpEvents.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // lblUserStatus
@@ -297,6 +305,8 @@
             // 
             // tpEvents
             // 
+            tpEvents.Controls.Add(panel1);
+            tpEvents.Controls.Add(lbEvents);
             tpEvents.Location = new Point(4, 24);
             tpEvents.Name = "tpEvents";
             tpEvents.Size = new Size(723, 340);
@@ -313,6 +323,68 @@
             btnLogout.Text = "Log out";
             btnLogout.UseVisualStyleBackColor = true;
             btnLogout.Click += btnLogout_Click;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(btnNewEvent);
+            panel1.Controls.Add(btnDeleteEvent);
+            panel1.Controls.Add(btnViewEvent);
+            panel1.Controls.Add(btnEditEvent);
+            panel1.Dock = DockStyle.Bottom;
+            panel1.Location = new Point(0, 301);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(723, 39);
+            panel1.TabIndex = 8;
+            // 
+            // btnNewEvent
+            // 
+            btnNewEvent.Location = new Point(3, 3);
+            btnNewEvent.Name = "btnNewEvent";
+            btnNewEvent.Size = new Size(75, 23);
+            btnNewEvent.TabIndex = 2;
+            btnNewEvent.Text = "New";
+            btnNewEvent.UseVisualStyleBackColor = true;
+            btnNewEvent.Click += btnNewEvent_Click;
+            // 
+            // btnDeleteEvent
+            // 
+            btnDeleteEvent.Location = new Point(84, 3);
+            btnDeleteEvent.Name = "btnDeleteEvent";
+            btnDeleteEvent.Size = new Size(75, 23);
+            btnDeleteEvent.TabIndex = 3;
+            btnDeleteEvent.Text = "Delete";
+            btnDeleteEvent.UseVisualStyleBackColor = true;
+            btnDeleteEvent.Click += btnDeleteEvent_Click;
+            // 
+            // btnViewEvent
+            // 
+            btnViewEvent.Location = new Point(246, 3);
+            btnViewEvent.Name = "btnViewEvent";
+            btnViewEvent.Size = new Size(75, 23);
+            btnViewEvent.TabIndex = 5;
+            btnViewEvent.Text = "View";
+            btnViewEvent.UseVisualStyleBackColor = true;
+            btnViewEvent.Click += btnViewEvent_Click;
+            // 
+            // btnEditEvent
+            // 
+            btnEditEvent.Location = new Point(165, 3);
+            btnEditEvent.Name = "btnEditEvent";
+            btnEditEvent.Size = new Size(75, 23);
+            btnEditEvent.TabIndex = 4;
+            btnEditEvent.Text = "Edit";
+            btnEditEvent.UseVisualStyleBackColor = true;
+            btnEditEvent.Click += btnEditEvent_Click;
+            // 
+            // lbEvents
+            // 
+            lbEvents.Dock = DockStyle.Top;
+            lbEvents.FormattingEnabled = true;
+            lbEvents.ItemHeight = 15;
+            lbEvents.Location = new Point(0, 0);
+            lbEvents.Name = "lbEvents";
+            lbEvents.Size = new Size(723, 304);
+            lbEvents.TabIndex = 9;
             // 
             // Dashboard
             // 
@@ -332,6 +404,8 @@
             panelAnnouncementsFunctions.ResumeLayout(false);
             tpComplaints.ResumeLayout(false);
             panelComplaintFunctions.ResumeLayout(false);
+            tpEvents.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -362,5 +436,11 @@
         private Button btnViewComplaint;
         private Button btnEditComplaint;
         private Button btnLogout;
+        private Panel panel1;
+        private Button btnNewEvent;
+        private Button btnDeleteEvent;
+        private Button btnViewEvent;
+        private Button btnEditEvent;
+        private ListBox lbEvents;
     }
 }

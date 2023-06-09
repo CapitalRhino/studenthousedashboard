@@ -144,7 +144,7 @@ namespace Data
                 var writer = cmd.ExecuteNonQuery();
                 if (writer == -1)
                 {
-                    throw new DatabaseOperationException("Database error: Complaint not created");
+                    throw new DatabaseOperationException("Database error: Complaint not updated");
                 }
             }
         }

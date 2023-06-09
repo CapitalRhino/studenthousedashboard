@@ -22,6 +22,7 @@ namespace WebApp
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
             builder.Services.AddScoped<IAnnouncementRepository, AnnouncementRepository>();
             builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
+            builder.Services.AddScoped<IEventRepository, EventRepository>();
 
             var app = builder.Build();
 

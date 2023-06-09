@@ -129,6 +129,12 @@ namespace WinForms
             {
                 lbComplaints.Items.Add(complaint);
             }
+            EventManager eventManager = new EventManager(new EventRepository());
+            lbEvents.Items.Clear();
+            foreach (Event @event in eventManager.GetAllEvents())
+            {
+                lbEvents.Items.Add(@event);
+            }
         }
 
         private void Dashboard_FormClosed(object sender, FormClosedEventArgs e)
@@ -242,6 +248,60 @@ namespace WinForms
             if (MessageBox.Show("Do you want to log out?", "Log out", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Close();
+            }
+        }
+
+        private void btnNewEvent_Click(object sender, EventArgs e)
+        {
+            EventForm eventForm = new EventForm(null, false, user);
+            eventForm.ShowDialog();
+            RefreshLists();
+        }
+
+        private void btnDeleteEvent_Click(object sender, EventArgs e)
+        {
+            if (lbEvents.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                Event currentEvent = (Event)lbEvents.SelectedItem;
+                if (MessageBox.Show($"Are you sure you want to delete\n{currentEvent.Title}\nCreated at {currentEvent.PublishDate.ToString("g")} by {currentEvent.Author.Name}",
+                    "Delete announcement", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    EventManager eventManager = new EventManager(new EventRepository());
+                    eventManager.DeleteEvent(currentEvent.ID);
+                }
+                RefreshLists();
+            }
+        }
+
+        private void btnEditEvent_Click(object sender, EventArgs e)
+        {
+            if (lbEvents.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                EventForm eventForm = new EventForm((Event)lbEvents.SelectedItem, false, user);
+                eventForm.ShowDialog();
+                RefreshLists();
+            }
+        }
+
+        private void btnViewEvent_Click(object sender, EventArgs e)
+        {
+            if (lbEvents.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select an item from the list");
+            }
+            else
+            {
+                EventForm eventForm = new EventForm((Event)lbEvents.SelectedItem, true, user);
+                eventForm.ShowDialog();
+                RefreshLists();
             }
         }
     }

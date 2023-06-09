@@ -134,8 +134,8 @@ namespace Data
                 cmd.Parameters.AddWithValue("@id", id);
                 cmd.Parameters.AddWithValue("@desc", description);
                 cmd.Parameters.AddWithValue("@title", title);
-                cmd.Parameters.AddWithValue("@status", startDate);
-                cmd.Parameters.AddWithValue("@severity", endDate);
+                cmd.Parameters.AddWithValue("@start", startDate);
+                cmd.Parameters.AddWithValue("@end", endDate);
                 var writer = cmd.ExecuteNonQuery();
                 if (writer == -1)
                 {

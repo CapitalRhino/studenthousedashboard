@@ -30,15 +30,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Complaints">Complaints</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Events">Events</a>
+                            </li>
                         }
                     </ul>
                     <ul class="navbar-nav">
                     @if (User.Identity.IsAuthenticated)
                     {
-
-                            <li class="nav-item">
-                                <a class="nav-link text-dark">Logged in as @User.Identity.Name</a>
-                            </li>
                             @if (User.IsInRole("ADMIN") || User.IsInRole("MANAGER"))
                             {
                                 <li class="nav-item">
@@ -46,7 +45,7 @@
                                 </li>
                             }
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/ChangePassword">Change password</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/ChangePassword"><b>@User.Identity.Name</b></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Logout">Logout</a>
@@ -74,7 +73,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            <p>StudentHouseDashboard &copy; 2023 <a asp-area="" asp-page="/Privacy">Privacy</a> <a asp-area="" asp-page="/Contact">Contact</a></p>
+            <p>StudentHouseDashboard &copy; 2023 <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 

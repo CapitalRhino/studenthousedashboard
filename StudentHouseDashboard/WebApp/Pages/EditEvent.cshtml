@@ -1,0 +1,41 @@
+﻿@page
+@using Models;
+@model WebApp.Pages.EditEventModel
+@{
+    ViewData["Title"] = "Edit event";
+    Model.Event = (Event)ViewData["event"];
+}
+
+
+
+@if (Model.Event == null)
+{
+    <h1>Create new event</h1>
+}
+else
+{
+    <h1>@ViewData["Title"]</h1>
+}
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="Event.Title" class="form-label">Title: </label>
+            <input asp-for="Event.Title" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Event.StartDate" class="form-label">Start date: </label>
+            <input asp-for="Event.StartDate" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Event.EndDate" class="form-label">End date: </label>
+            <input asp-for="Event.EndDate" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Event.Description" class="form-label">Description: </label>
+            <textarea asp-for="Event.Description" class="form-control" rows="5"></textarea>
+        </div>
+        @if (ViewData["event"] == null)
+        {
+            <input type="hidden" name="n" value="true" />
+        }
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </form>

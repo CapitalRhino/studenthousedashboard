@@ -1,0 +1,26 @@
+﻿@page
+@using Models;
+@using System.Globalization
+@using System.Security.Claims;
+@model WebApp.Pages.EventModel
+@{
+    Event _event = (Event)ViewData["event"];
+    ViewData["Title"] = $"{_event.Title}";
+}
+<h1>@_event.Title</h1>
+<h2>@_event.StartDate.ToString("g") - @_event.EndDate.ToString("g")</h2>
+<p>
+    Published @_event.PublishDate.ToString("g") by @_event.Author.Name
+    @Html.Raw((_event.Author.Role == UserRole.ADMIN || _event.Author.Role == UserRole.MANAGER)
+        ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_event.Author.Role.ToString().ToLower())})</b>"
+        : "")
+</p>
+<p>
+    @if (User.FindFirst(ClaimTypes.Role).Value == "ADMIN" || User.Identity.Name == _event.Author.Name)
+    {
+        <a href="./EditEvent?id=@_event.ID" class="btn btn-outline-warning">Edit</a>
+        <a href="./DeleteEvent?id=@_event.ID" class="btn btn-outline-danger">Delete</a>
+    }
+</p>
+<hr/>
+<p>@Html.Raw(_event.Description.Replace(Environment.NewLine, "<br />"))</p>

@@ -48,6 +48,11 @@ namespace Tests.Mocks
             return announcements.GetRange(p + c, c);
         }
 
+        public List<Announcement> SearchAnnouncement(string query)
+        {
+            return announcements.Where(x => x.Title.Contains(query) || x.Description.Contains(query)).ToList();
+        }
+
         public void UpdateAnnouncement(int id, string title, string description, bool isImportant, bool isSticky)
         {
             Announcement announcement = announcements.First(x => x.ID == id);

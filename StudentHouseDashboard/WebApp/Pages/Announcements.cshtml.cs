@@ -34,7 +34,7 @@ namespace WebApp.Pages
             ViewData.Add("count", c);
             ViewData.Add("allCount", AnnouncementManager.GetAllAnnouncements().Count);
         }
-        public void OnGetFilter(string s, bool asc, bool des, bool imp) // search, ascending, descending order, isImportant
+        public void OnGetFilter(string s, bool asc, bool imp) // search, ascending/descending order, isImportant
         {
             AnnouncementManager = new AnnouncementManager(_announcementRepository);
             List<Announcement> announcements = new List<Announcement>();
@@ -46,15 +46,17 @@ namespace WebApp.Pages
             {
                 announcements = AnnouncementManager.GetAllAnnouncements();
             }
+
             if (imp)
             {
                 announcements = announcements.Where(x => x.IsImportant).ToList();
             }
+
             if (asc)
             {
                 announcements = announcements.OrderBy(x => x.PublishDate).ToList();
             }
-            else if (des)
+            else
             {
                 announcements = announcements.OrderByDescending(x => x.PublishDate).ToList();
             }

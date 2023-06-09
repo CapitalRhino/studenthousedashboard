@@ -24,6 +24,9 @@ namespace WinForms
             this.currentUser = currentUser;
 
             dtpPublishDate.Enabled = false;
+            tbTitle.Enabled = false;
+            tbDescription.Enabled = false;
+
             foreach (var item in Enum.GetValues(typeof(ComplaintStatus)))
             {
                 cbStatus.Items.Add(item);
@@ -32,11 +35,10 @@ namespace WinForms
             {
                 cbSeverity.Items.Add(item);
             }
+
             if (readOnly)
             {
                 btnSave.Enabled = false;
-                tbTitle.Enabled = false;
-                tbDescription.Enabled = false;
                 cbStatus.Enabled = false;
                 cbSeverity.Enabled = false;
             }

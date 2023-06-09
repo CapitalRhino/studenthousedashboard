@@ -45,12 +45,13 @@
             btnEditAnnouncement = new Button();
             lbAnnouncements = new ListBox();
             tpComplaints = new TabPage();
-            tpEvents = new TabPage();
-            lbComplaints = new ListBox();
             panelComplaintFunctions = new Panel();
             btnArchiveComplaint = new Button();
             btnViewComplaint = new Button();
             btnEditComplaint = new Button();
+            lbComplaints = new ListBox();
+            tpEvents = new TabPage();
+            btnLogout = new Button();
             tabControl1.SuspendLayout();
             tpUsers.SuspendLayout();
             panelUserFunctions.SuspendLayout();
@@ -243,25 +244,6 @@
             tpComplaints.Text = "Complaints";
             tpComplaints.UseVisualStyleBackColor = true;
             // 
-            // tpEvents
-            // 
-            tpEvents.Location = new Point(4, 24);
-            tpEvents.Name = "tpEvents";
-            tpEvents.Size = new Size(723, 340);
-            tpEvents.TabIndex = 3;
-            tpEvents.Text = "Events";
-            tpEvents.UseVisualStyleBackColor = true;
-            // 
-            // lbComplaints
-            // 
-            lbComplaints.Dock = DockStyle.Top;
-            lbComplaints.FormattingEnabled = true;
-            lbComplaints.ItemHeight = 15;
-            lbComplaints.Location = new Point(0, 0);
-            lbComplaints.Name = "lbComplaints";
-            lbComplaints.Size = new Size(723, 289);
-            lbComplaints.TabIndex = 0;
-            // 
             // panelComplaintFunctions
             // 
             panelComplaintFunctions.Controls.Add(btnArchiveComplaint);
@@ -303,11 +285,41 @@
             btnEditComplaint.UseVisualStyleBackColor = true;
             btnEditComplaint.Click += btnEditComplaint_Click;
             // 
+            // lbComplaints
+            // 
+            lbComplaints.Dock = DockStyle.Top;
+            lbComplaints.FormattingEnabled = true;
+            lbComplaints.ItemHeight = 15;
+            lbComplaints.Location = new Point(0, 0);
+            lbComplaints.Name = "lbComplaints";
+            lbComplaints.Size = new Size(723, 289);
+            lbComplaints.TabIndex = 0;
+            // 
+            // tpEvents
+            // 
+            tpEvents.Location = new Point(4, 24);
+            tpEvents.Name = "tpEvents";
+            tpEvents.Size = new Size(723, 340);
+            tpEvents.TabIndex = 3;
+            tpEvents.Text = "Events";
+            tpEvents.UseVisualStyleBackColor = true;
+            // 
+            // btnLogout
+            // 
+            btnLogout.Location = new Point(651, 0);
+            btnLogout.Name = "btnLogout";
+            btnLogout.Size = new Size(75, 23);
+            btnLogout.TabIndex = 7;
+            btnLogout.Text = "Log out";
+            btnLogout.UseVisualStyleBackColor = true;
+            btnLogout.Click += btnLogout_Click;
+            // 
             // Dashboard
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(731, 368);
+            Controls.Add(btnLogout);
             Controls.Add(lblUserStatus);
             Controls.Add(tabControl1);
             Name = "Dashboard";
@@ -349,5 +361,6 @@
         private Button btnArchiveComplaint;
         private Button btnViewComplaint;
         private Button btnEditComplaint;
+        private Button btnLogout;
     }
 }

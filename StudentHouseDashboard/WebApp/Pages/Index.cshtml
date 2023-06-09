@@ -7,7 +7,7 @@
 <div class="bg-image text-white shadow-1-strong p-5 text-center bg-body-tertiary rounded-3" style="background: url(https://images.pexels.com/photos/1036804/pexels-photo-1036804.jpeg?h=800) no-repeat center center; background-size: 100%;">
     <h1 class="text-body-emphasis">Student House Dashboard</h1>
     <p class="lead">
-        The student square for housemates! This site is currently under construction.
+        Welcome to the student square for housemates!
     </p>
     @if (!User.Identity.IsAuthenticated)
     {
@@ -16,6 +16,14 @@
     else
     {
         <a class="btn btn-primary" asp-page="Announcements">Announcements</a>
+        <a class="btn btn-primary" asp-page="Complaints">Complaints</a>
     }
 </div>
+
 <a>Image: pexels.com</a>
+
+<div class="card mt-3 text-center">
+    <h3>Newest update</h3>
+    <p>Now you can search for announcements on a specific date using the search bar and the keyword "date:"</p>
+    <p>Example: <b>date:2023-05-13</b></p>
+</div>

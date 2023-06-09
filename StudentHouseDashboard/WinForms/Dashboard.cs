@@ -236,5 +236,13 @@ namespace WinForms
                 RefreshLists();
             }
         }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Do you want to log out?", "Log out", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                Close();
+            }
+        }
     }
 }

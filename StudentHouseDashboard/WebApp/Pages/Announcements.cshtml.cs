@@ -34,10 +34,31 @@ namespace WebApp.Pages
             ViewData.Add("count", c);
             ViewData.Add("allCount", AnnouncementManager.GetAllAnnouncements().Count);
         }
-        public void OnGetSearch(string s) // search
+        public void OnGetFilter(string s, bool asc, bool des, bool imp) // search, ascending, descending order, isImportant
         {
             AnnouncementManager = new AnnouncementManager(_announcementRepository);
-            ViewData.Add("announcements", AnnouncementManager.SearchAnnouncements(s));
+            List<Announcement> announcements = new List<Announcement>();
+            if (!string.IsNullOrEmpty(s))
+            {
+                announcements = AnnouncementManager.SearchAnnouncements(s);
+            }
+            else
+            {
+                announcements = AnnouncementManager.GetAllAnnouncements();
+            }
+            if (imp)
+            {
+                announcements = announcements.Where(x => x.IsImportant).ToList();
+            }
+            if (asc)
+            {
+                announcements = announcements.OrderBy(x => x.PublishDate).ToList();
+            }
+            else if (des)
+            {
+                announcements = announcements.OrderByDescending(x => x.PublishDate).ToList();
+            }
+            ViewData.Add("announcements", announcements);
         }
     }
 }

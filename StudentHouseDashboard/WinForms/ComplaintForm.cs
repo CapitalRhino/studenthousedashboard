@@ -132,7 +132,7 @@ namespace WinForms
 
         private void btnCreateComment_Click(object sender, EventArgs e)
         {
-            CommentForm form = new CommentForm(null, false, currentUser, true, complaint.ID);
+            CommentForm form = new CommentForm(null, false, currentUser, "complaint", complaint.ID);
             form.ShowDialog();
             RefreshComments();
         }

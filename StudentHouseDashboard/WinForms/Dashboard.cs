@@ -202,8 +202,8 @@ namespace WinForms
                 if (MessageBox.Show($"Are you sure you want to archive\n{currentComplaint.Title}\nCreated at {currentComplaint.PublishDate.ToString("g")} by {currentComplaint.Author.Name}",
                     "Archive complaint", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    AnnouncementManager announcementManager = new AnnouncementManager(new AnnouncementRepository());
-                    announcementManager.DeleteAnnouncement(currentComplaint.ID);
+                    ComplaintManager complaintManager = new ComplaintManager(new ComplaintRepository());
+                    complaintManager.UpdateComplaint(currentComplaint.ID, currentComplaint.Title, currentComplaint.Description, ComplaintStatus.ARCHIVED, currentComplaint.Severity);
                 }
                 RefreshLists();
             }

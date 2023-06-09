@@ -19,10 +19,10 @@ namespace WinForms
             {
                 MessageBox.Show("Wrong username or password", "Login failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            /*else if (user.Role == UserRole.TENANT)
+            else if (user.Role == UserRole.TENANT)
             {
-                MessageBox.Show("This application is for the management. Please use the web portal", "Access denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+                MessageBox.Show("This application is for the management. Please use the web portal!", "Access denied", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             else
             {
                 Dashboard dashboard = new Dashboard(this, user);

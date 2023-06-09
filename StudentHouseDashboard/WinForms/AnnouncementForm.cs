@@ -124,7 +124,7 @@ namespace WinForms
 
         private void btnCreateComment_Click(object sender, EventArgs e)
         {
-            CommentForm form = new CommentForm(null, false, currentUser, true, announcement.ID);
+            CommentForm form = new CommentForm(null, false, currentUser, "announcement", announcement.ID);
             form.ShowDialog();
             RefreshComments();
         }

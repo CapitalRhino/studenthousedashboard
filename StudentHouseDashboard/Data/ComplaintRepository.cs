@@ -68,10 +68,13 @@ namespace Data
             List<Complaint> complaints = new List<Complaint>();
             UserRepository userRepository = new UserRepository();
             User user = userRepository.GetUserById(userId);
-            string sql = "SELECT * FROM Complaints ORDER BY ID DESC OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
+            // Status 3 is Archived status
+            // no need to list archived complaints for now
+            // future revision: add an option to see archived complaints?
+            string sql = "SELECT * FROM Complaints WHERE Status != 3 ORDER BY ID DESC OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
             if (user.Role == UserRole.TENANT)
             {
-                sql = $"SELECT * FROM Complaints WHERE Author = {userId} ORDER BY ID DESC OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
+                sql = $"SELECT * FROM Complaints WHERE Author = {userId} AND Status != 3 ORDER BY ID DESC OFFSET @start ROWS FETCH NEXT @count ROWS ONLY;";
             }
             if (c == null)
             {

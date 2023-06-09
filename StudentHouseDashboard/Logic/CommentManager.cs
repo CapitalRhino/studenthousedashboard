@@ -15,11 +15,15 @@ namespace Logic
             this.commentRepository = commentRepository;
         }
         
-        public void CreateCommentToAnnouncement(User author, string description, string title, DateTime publishDate, int announcementId)
+        public Comment GetCommentById(int id)
+        {
+            return commentRepository.GetCommentById(id);
+        }
+        public void CreateCommentOnAnnouncement(User author, string description, string title, DateTime publishDate, int announcementId)
         {
             commentRepository.CreateCommentOnAnnouncement(author, description, title, publishDate, announcementId);
         }
-        public void CreateResponseToComment(User author, string description, string title, DateTime publishDate, int commentId)
+        public void CreateResponseOnComment(User author, string description, string title, DateTime publishDate, int commentId)
         {
             commentRepository.CreateResponseOnComment(author, description, title, publishDate, commentId);
         }
@@ -34,6 +38,14 @@ namespace Logic
         public void DeleteResponseOnComment(int responseId, int commentId)
         {
             commentRepository.DeleteResponseOnComment(responseId, commentId);
+        }
+        public List<Comment> GetAllCommentsOnComplaint(int complaintId)
+        {
+            return commentRepository.GetAllCommentsOnComplaint(complaintId);
+        }
+        public void CreateCommentOnComplaint(User author, string description, string title, DateTime publishDate, int complaintId)
+        {
+            commentRepository.CreateCommentOnComplaint(author, description, title, publishDate, complaintId);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace WebApp.Pages
         public void OnGet(int id)
         {
             AnnouncementManager announcementManager = new AnnouncementManager(_announcementRepository);
-            ViewData.Add("announcement", announcementManager.GetAllAnnouncements().First(x => x.ID == id));
+            ViewData.Add("announcement", announcementManager.GetAnnouncementById(id));
         }
     }
 }

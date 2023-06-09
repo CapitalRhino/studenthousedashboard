@@ -17,7 +17,8 @@ namespace WinForms
     {
         Comment? comment;
         User currentUser;
-        bool announcementResponse;
+        string responseType;
+        bool complaint;
         int parentId;
         public CommentForm(Comment? comment, bool readOnly, User currentUser)
         {
@@ -62,9 +63,9 @@ namespace WinForms
                 lblAuthor.Text = $"Created by: {currentUser.Name}";
             }
         }
-        public CommentForm(Comment? comment, bool readOnly, User? currentUser, bool announcementResponse, int parentId) : this(comment, readOnly, currentUser)
+        public CommentForm(Comment? comment, bool readOnly, User? currentUser, string responseType, int parentId) : this(comment, readOnly, currentUser)
         {
-            this.announcementResponse = announcementResponse;
+            this.responseType = responseType;
             this.parentId = parentId;
         }
         private void btnSave_Click(object sender, EventArgs e)
@@ -77,13 +78,19 @@ namespace WinForms
             }
             if (this.comment == null)
             {
-                if (announcementResponse)
+                switch (responseType)
                 {
-                    commentManager.CreateCommentToAnnouncement(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
-                }
-                else
-                {
-                    commentManager.CreateResponseToComment(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
+                    case "announcement": 
+                        commentManager.CreateCommentOnAnnouncement(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId); 
+                        break;
+                    case "comment": 
+                        commentManager.CreateResponseOnComment(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId); 
+                        break;
+                    case "complaint":
+                        commentManager.CreateCommentOnComplaint(currentUser, tbDescription.Text, tbTitle.Text, dtpPublishDate.Value, parentId);
+                        break;
+                    default:
+                        break;
                 }
             }
             else
@@ -142,7 +149,7 @@ namespace WinForms
 
         private void btnCreateComment_Click(object sender, EventArgs e)
         {
-            CommentForm form = new CommentForm(null, false, currentUser, false, comment.ID);
+            CommentForm form = new CommentForm(null, false, currentUser, "comment", comment.ID);
             form.ShowDialog();
             RefreshComments();
         }

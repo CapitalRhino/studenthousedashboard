@@ -14,7 +14,7 @@
     </div>
     <div class="mb-3">
         <label asp-for="Complaint.Severity" class="form-label">Severity: </label>
-        <select asp-for="Complaint.Severity" asp-items="Html.GetEnumSelectList<ComplaintSeverity>()" />
+        <select asp-for="Complaint.Severity" asp-items="Html.GetEnumSelectList<ComplaintSeverity>()"></select>
     </div>
     <div class="mb-3">
         <label asp-for="Complaint.Description" class="form-label">Description: </label>

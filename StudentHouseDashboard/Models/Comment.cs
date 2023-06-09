@@ -7,6 +7,10 @@ namespace Models
 {
     public class Comment : GenericMessage
     {
+        public Comment()
+        {
+                
+        }
         public Comment(int id, User author, string description, string title, DateTime publishDate) : base(id, author, description, title, publishDate)
         {
             Responses = new List<Comment>();

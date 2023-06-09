@@ -210,7 +210,19 @@ public class CommentRepository : ICommentRepository
 
     public void CreateCommentOnComplaint(User author, string description, string title, DateTime publishDate, int complaintId)
     {
-        
+        Comment comment = CreateComment(author, description, title, publishDate);
+        using (SqlConnection connection = SqlConnectionHelper.CreateConnection())
+        {
+            string sql = "INSERT INTO ComplaintsComments (ComplaintID, CommentID) VALUES (@complaintID, @commentID);";
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            cmd.Parameters.AddWithValue("@complaintID", complaintId);
+            cmd.Parameters.AddWithValue("@commentID", comment.ID);
+            int writer = cmd.ExecuteNonQuery();
+            if (writer != 1)
+            {
+                throw new DatabaseOperationException("Database error: Complaint comment not created");
+            }
+        }
     }
 
     public List<Comment> GetAllCommentsOnComplaint(int complaintId)

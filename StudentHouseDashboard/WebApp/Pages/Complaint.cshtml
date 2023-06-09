@@ -2,46 +2,47 @@
 @using Models;
 @using System.Globalization
 @using System.Security.Claims;
-@model WebApp.Pages.AnnouncementModel
+@model WebApp.Pages.ComplaintModel
 @{
-    Announcement announcement = (Announcement)ViewData["announcement"];
-    ViewData["Title"] = $"{announcement.Title}";
+    Complaint complaint = (Complaint)ViewData["complaint"];
+    ViewData["Title"] = $"{complaint.Title}";
 }
-<h1 @if (announcement.IsImportant)
+<h1 @if (complaint.Severity == ComplaintSeverity.URGENT)
 {
     @: style="color: red;"
-}>@announcement.Title
+}
+else if (complaint.Severity == ComplaintSeverity.HIGH)
+{
+    @: style="color: orange;"
+}
+@if (complaint.Severity == ComplaintSeverity.LOW)
+{
+    @: style="color: darkgreen;"
+}>
+    @complaint.Title
 </h1>
 <p>
-    Published @announcement.PublishDate.ToString("g") by @announcement.Author.Name
-    @Html.Raw((announcement.Author.Role == UserRole.ADMIN || announcement.Author.Role == UserRole.MANAGER)
-        ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(announcement.Author.Role.ToString().ToLower())})</b>"
-        : "")
-    @(announcement.IsSticky ? "Pinned" : "")
+    Filed @complaint.PublishDate.ToString("g") by @complaint.Author.Name
 </p>
 <p>
-    @if (User.FindFirst(ClaimTypes.Role).Value == "ADMIN" || User.Identity.Name == announcement.Author.Name)
-    {
-        <a href="./EditAnnouncement?id=@announcement.ID" class="btn btn-outline-warning">Edit</a>
-        <a href="./DeleteAnnouncement?id=@announcement.ID" class="btn btn-outline-danger">Delete</a>
-    }
+    @complaint.Status - @complaint.Severity
 </p>
 <hr/>
-<p>@Html.Raw(announcement.Description.Replace(Environment.NewLine, "<br />"))</p>
+<p>@Html.Raw(complaint.Description.Replace(Environment.NewLine, "<br />"))</p>
 <br/>
 <h3>Comments</h3>
-<a href="./AddComment?t=announcement&id=@announcement.ID" class="btn btn-primary">Add comment</a>
-@if (announcement.Comments.Count() == 0)
+@if (complaint.Responses.Count() == 0)
 {
     <p>No comments found</p>
 }
 else
 {
-    foreach (Comment comment in announcement.Comments)
+    foreach (Comment comment in complaint.Responses)
     {
         DisplayComment(comment, 0);
     }
 }
+<a href="./AddComment?t=complaint&id=@complaint.ID" class="btn btn-primary">Add reply</a>
 
 @{
     void DisplayComment(Comment comment, int level)
@@ -56,7 +57,6 @@ else
                     <h5 class="card-title">@comment.Author.Name @Html.Raw((comment.Author.Role == UserRole.ADMIN || comment.Author.Role == UserRole.MANAGER) ? $"<b>({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(comment.Author.Role.ToString().ToLower())})</b>" : "")</h5>
                     <h6>@comment.PublishDate.ToString("g")</h6>
                     <p class="card-text">@Html.Raw(comment.Description.Replace(Environment.NewLine, "<br />"))</p>
-                    <a class="btn btn-outline-primary" href="./AddComment?t=comment&id=@comment.ID">Reply</a>
                 </div>
                 @if (comment.Responses.Count != 0)
                 {
